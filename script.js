@@ -1,4 +1,5 @@
 let score = 0;
+let adder = 1;
 let multiplier = 1;
 let passive = 0;
 let page = 0;
@@ -98,7 +99,7 @@ g.text("Eggooo!", 140, 100);
 titleText.img = g;
 
 
-let target = new Sprite(0, -300, 400, 225);
+let target = new Sprite(0, -400, 400, 225);
 target.img = egg1;
 target.scale = .3;
 target.img.offset.y = -80;
@@ -178,12 +179,12 @@ infoMenuText.color = '#dcb98a';
 infoMenuText.stroke = '#dcb98a';
 
 // score menu
-let scoreMenu = new Sprite(-295, 60, 400, 400);
+let scoreMenu = new Sprite(-90, -540, 480, 260);
 scoreMenu.image = scoreMenuL;
-scoreMenu.scale = 0.2;
-scoreMenu.textSize = 15;
-scoreMenu.textColor = '#90625d';
-scoreMenu.text = scoreText + '\n\n' + multiplierText + '\n\n' + passiveText;
+scoreMenu.scale = .4;
+// scoreMenu.textSize = 15;
+// scoreMenu.textColor = '#90625d';
+// scoreMenu.text = scoreText + '\n\n' + multiplierText + '\n\n' + passiveText;
 
 // coin icon
 let coinIcon = new Sprite(-375, 23, 50, 50);
@@ -201,14 +202,14 @@ waterIcon.image = egg3;
 waterIcon.scale = 0.03;
 
 // shop button
-let shopButton = new Sprite(765, 370, 800, 800);
+let shopButton = new Sprite(150, -250, 400, 400);
 shopButton.image = shopButtonL;
-shopButton.scale = 0.05;
+shopButton.scale = 0.1;
 
 // settings button
-let settingsButton = new Sprite(35, 370, 800, 800);
+let settingsButton = new Sprite(-150, -250, 400, 400);
 settingsButton.image = settingsButtonL;
-settingsButton.scale = 0.05;
+settingsButton.scale = 0.1;
 
 // shop menu
 let shopMenu = new Sprite(500, 200, 200, 400);
@@ -283,7 +284,7 @@ shopMenuText6.textColor = '#90625d';
 shopMenuText6.color = '#dcb98a';
 shopMenuText6.stroke = '#dcb98a';
 allSprites.passes(allSprites);
-//allSprites.debug = true;
+allSprites.debug = true;
 
 
 q5.update = function () {
@@ -320,27 +321,67 @@ q5.update = function () {
 			startButton.img = playButton;
 			startButton.y = 70;
 		}
+
+		if 	(mouse.pressing() && pointer.overlapping(infoButton)) {
+			infoButton.y = 155;
+			infoButton.img = exButtonClicked;
+			setTimeout(() => { infoButton.img = exButton;}, 100);
+			page = 2;
+		}
+		if (pointer.overlapping(infoButton)) {
+			infoButton.img = exButtonClicked;
+			infoButton.y = 155;
+		} else {
+			infoButton.img = exButton;
+			infoButton.y = 150;
+		}
   } else if (page == 1) {
 		target.visible = true;
-		infoButton.img = settingsButtonL;
-		startButton.moveTo(0,300,3);
+		startButton.moveTo(0,470,3);
 		target.moveTo(0,0,3);
+		titleText.moveTo(0,320,3);
+		infoButton.moveTo(-150,550,3);
+		settingsButton.moveTo(-150, 150, 3);
+		shopButton.moveTo(150, 150, 3);
+		scoreMenu.moveTo(-90, -140, 3);
+		if 	(mouse.pressing() && pointer.overlapping(settingsButton)) {
+			settingsButton.y = 155;
+			settingsButton.img = settingsButtonClicked;
+			setTimeout(() => { settingsButton.img = settingsButtonL;}, 100);
+			page = 1;
+		}
+		if (pointer.overlapping(settingsButton)) {
+			settingsButton.img = settingsButtonClicked;
+			settingsButton.y = 155;
+		} else {
+			settingsButton.img = settingsButtonL;
+		}
+
+		if 	(mouse.pressing() && pointer.overlapping(shopButton)) {
+			shopButton.y = 155;
+			shopButton.img = shopButtonClicked;
+			setTimeout(() => { shopButton.img = shopButtonL;}, 100);
+			page = 1;
+		}
+		if (pointer.overlapping(shopButton)) {
+			shopButton.img = shopButtonClicked;
+			shopButton.y = 155;
+		} else {
+			shopButton.img = shopButtonL;
+		}
+
+		if 	(mouse.pressing() && pointer.overlapping(target)) {
+			target.scale = .28;
+			score += adder * multiplier;
+		} else {
+			target.scale = .3;
+		}
   } 
-  //start button clicked
-	// if (page == 1) {
-	// 	startButton.visible = false;
-	// 	target.visible = true;
-	// 	settingsMenu.visible = false;
-	// 	if (mouse.presses() && pointer.overlapping(target)) {
-	// 	score += 1;
-	// 	}
-	// }
 
-
-// //page 0 - start
+//page 0 - start
 //page 1 - main
-//page 2 - audio
-//page 3 - info
+//page 2 - info
+//page 3 - settings
 //page 4 - shop
 //page 5 - prestige
 
