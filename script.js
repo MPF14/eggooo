@@ -84,22 +84,21 @@ let audio10 = loadSound('assets/audio/BLUE.mp3');
 let startButton = new Sprite(0, 70, 350, 100);
 startButton.img = playButton;
 startButton.scale = .6;
-startButton.img.offset.y = 10;
 startButton.layer = 1;
 
 let titleText = new Sprite(0, -80, 260, 100);
-let g = createGraphics(280, 200);
-g.textSize(80);
-g.fill('#658ca1');
-g.stroke('#658ca1');
-g.strokeWeight(2);
-g.textAlign(CENTER, CENTER);
-g.textFont(font2);
-g.text("Eggooo!", 143, 100);
-titleText.img = g;
+let titleGraphics = createGraphics(280, 200);
+titleGraphics.textSize(80);
+titleGraphics.fill('#658ca1');
+titleGraphics.stroke('#658ca1');
+titleGraphics.strokeWeight(2);
+titleGraphics.textAlign(CENTER, CENTER);
+titleGraphics.textFont(font2);
+titleGraphics.text("Eggooo!", 143, 100);
+titleText.img = titleGraphics;
 
 
-let target = new Sprite(0, -400, 400, 225);
+let target = new Sprite(0, -350, 400, 225);
 target.img = egg1;
 target.scale = .3;
 target.img.offset.y = -80;
@@ -155,28 +154,35 @@ volumeText.stroke = '#dcb98a';
 volumeText.textColor = '#90625d';
 
 //info button
-let infoButton = new Sprite(-150, 150, 400, 400);
+let infoButton = new Sprite(-160, 160, 400, 400);
 infoButton.image = exButton;
 infoButton.scale = 0.1;
 
-let infoText = new Sprite(225, 685, 10, 10);
-infoText.text = 'info';
-infoText.textSize = 20;
-infoText.color = '#dcb98a';
-infoText.stroke = '#dcb98a';
-infoText.textColor = '#90625d';
-
-//info menu
-let infoMenu = new Sprite(0, 400, 200, 400);
+let infoMenu = new Sprite(0, 400, 430, 490);
 infoMenu.image = infoMenuL;
-infoMenu.scale = .6;
+infoMenu.scale = .625;
 
-// let infoMenuText = new Sprite(0, 400, 10, 10);
-// infoMenuText.text = 'Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher';
-// infoMenuText.textSize = 14;
-// infoMenuText.textColor = '#90625d';
-// infoMenuText.color = '#dcb98a';
-// infoMenuText.stroke = '#dcb98a';
+let infoText = new Sprite(0, 285, 100, 100);
+let infoGraphics = createGraphics(300, 200);
+infoGraphics.textSize(35);
+infoGraphics.fill('#90625d');
+infoGraphics.stroke('#dcb98a');
+infoGraphics.strokeWeight(2);
+infoGraphics.textAlign(CENTER, CENTER);
+infoGraphics.textFont(font2);
+infoGraphics.text("Info", 150, 100);
+infoText.img = infoGraphics;
+
+let infoMenuText = new Sprite(0, 490, 10, 10);
+let infoMenuGraphics = createGraphics(300, 400);
+infoMenuGraphics.textSize(13);
+infoMenuGraphics.fill('#90625d');
+infoMenuGraphics.stroke('#dcb98a');
+infoMenuGraphics.strokeWeight(1);
+infoMenuGraphics.textAlign(CENTER, TOP);
+infoMenuGraphics.textFont(font1);
+infoMenuGraphics.text('Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher', 150, 20);
+infoMenuText.img = infoMenuGraphics;
 
 // score menu
 let scoreMenu = new Sprite(-90, -540, 480, 260);
@@ -300,7 +306,6 @@ q5.update = function () {
   	}
 	
 	if (page == 0) {
-		target.visible = false;
 		// textFont(font2);
 		// settingsButton.img = exButton;
 		// textSize(80);
@@ -308,98 +313,141 @@ q5.update = function () {
 		// stroke ('#658ca1');
 		// textAlign(CENTER, CENTER);
 		// text('Eggooo!', 0, -80);
-		if 	(mouse.pressing() && pointer.overlapping(startButton)) {
-			startButton.y = 80;
+		if 	(mouse.pressed() && pointer.overlapping(startButton)) {
+			startButton.img.offset.y = 10;
 			startButton.img = playButtonClicked;
-			setTimeout(() => { startButton.img = playButton;}, 100);
+			setTimeout(() => {startButton.img = playButton; startButton.img.offset.y = 0;}, 100);
 			page = 1;
+			showMain();
 		}
 		if (pointer.overlapping(startButton)) {
 			startButton.img = playButtonClicked;
-			startButton.y = 80;
+			startButton.img.offset.y = 10;
+			setTimeout(() => {startButton.img = playButton; startButton.img.offset.y = 0;}, 100);
 		} else {
 			startButton.img = playButton;
-			startButton.y = 70;
+			startButton.img.offset.y = 0;
 		}
 
-		if 	(mouse.pressing() && pointer.overlapping(infoButton)) {
-			infoButton.y = 155;
+		if 	(mouse.pressed() && pointer.overlapping(infoButton)) {
+			infoButton.img.offsety = -5;
 			infoButton.img = exButtonClicked;
-			setTimeout(() => { infoButton.img = exButton;}, 100);
-			page = 2;
-			showInfo();
+			setTimeout(() => { infoButton.img = exButton; page = 2; infoButton.img.offset.y = 0;}, 100);
 		}
 		if (pointer.overlapping(infoButton)) {
 			infoButton.img = exButtonClicked;
-			infoButton.y = 155;
+			infoButton.img.offset.y = -5;
 		} else {
 			infoButton.img = exButton;
-			infoButton.y = 150;
+			infoButton.img.offset.y = 0;
 		}
-  } else if (page == 1) {
-		target.visible = true;
-		startButton.moveTo(0,470,3);
-		target.moveTo(0,0,3);
-		titleText.moveTo(0,320,3);
-		infoButton.moveTo(-150,550,3);
-		settingsButton.moveTo(-150, 150, 3);
-		shopButton.moveTo(150, 150, 3);
-		scoreMenu.moveTo(-90, -140, 3);
-		if 	(mouse.pressing() && pointer.overlapping(settingsButton)) {
-			settingsButton.y = 155;
+  	} else if (page == 1) {
+		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
+			settingsButton.img.offset.y = -5;
 			settingsButton.img = settingsButtonClicked;
-			setTimeout(() => { settingsButton.img = settingsButtonL;}, 100);
+			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
 			page = 1;
 		}
 		if (pointer.overlapping(settingsButton)) {
 			settingsButton.img = settingsButtonClicked;
-			settingsButton.y = 155;
+			settingsButton.img.offset.y = -5;
 		} else {
 			settingsButton.img = settingsButtonL;
+			settingsButton.img.offset.y = 0;
 		}
 
-		if 	(mouse.pressing() && pointer.overlapping(shopButton)) {
-			shopButton.y = 155;
+		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
+			shopButton.img.offset.y = -5;
 			shopButton.img = shopButtonClicked;
-			setTimeout(() => { shopButton.img = shopButtonL;}, 100);
+			setTimeout(() => { shopButton.img = shopButtonL; shopButton.img.offset.y = 0;}, 100);
 			page = 1;
 		}
 		if (pointer.overlapping(shopButton)) {
 			shopButton.img = shopButtonClicked;
-			shopButton.y = 155;
+			shopButton.img.offset.y = -5;
 		} else {
 			shopButton.img = shopButtonL;
+			shopButton.img.offset.y = 0;
 		}
 
-		if 	(mouse.pressing() && pointer.overlapping(target)) {
-			target.scale = .28;
+		if 	(mouse.pressed() && pointer.overlapping(target)) {
+			target.scale = .27;
+			setTimeout(() => { target.scale = .3;}, 25);
 			score += adder * multiplier;
-		} else {
-			target.scale = .3;
 		}
-  } 
-
+  	} else if (page == 2) {
+		showInfo();
+		if 	(mouse.pressed()) {
+			page = 0;
+			hideInfo();
+		} else if (pointer.overlapping(infoButton)) {
+			infoButton.img = exButtonClicked;
+			infoButton.y = 165;
+		} else {
+			infoButton.img = exButton;
+			infoButton.y = 160;
+		}
+	}
+};
 //page 0 - start
 //page 1 - main
-//page 2 - info
+//page 2 - info 
 //page 3 - settings
-//page 4 - shop
-//page 5 - prestige
+//page 4 - shop 1/2
+//page 5 - prestige 1/2
 
+function showMain() {
+	startButton.moveTo(0,470,10);
+	target.moveTo(0,50,10);
+	titleText.moveTo(0,320,10);
+	infoButton.moveTo(-160,560,10);
+	settingsButton.moveTo(-150, 150, 10);
+	shopButton.moveTo(150, 150, 10);
+	scoreMenu.moveTo(-90, -140, 10);
+}
 function hideInfo() {
-  infoMenu.moveTo(0, 400, 10);
-  //infoMenuText.moveTo(0, 400, 10);
+  	infoMenu.moveTo(0, 400, 10);
+	infoText.moveTo(0, 285, 10);
+  	infoMenuText.moveTo(0, 490, 10);
 }
 function showInfo() {
-  infoMenu.moveTo(0, 0, 10);
-  //infoMenuText.moveTo(0, 0, 10);
+  	infoMenu.moveTo(0, 0, 10);
+	infoText.moveTo(0, -115, 10);
+  	infoMenuText.moveTo(0, 90, 10);
+}
+
+
+function hideSettings() {
+  settingsMenu.moveTo(200, 600, 10);
+//   music.moveTo(115, 550, 10);
+//   leftArrow.moveTo(105, 590, 10);
+//   rightArrow.moveTo(135, 590, 10);
+//   musicText.moveTo(225, 550, 10);
+//   songText.moveTo(225, 590, 10);
+//   infoButton.moveTo(110, 685, 10);
+//   infoText.moveTo(225, 685, 10);
+//   infoMenu.moveTo(200, 600, 10);
+//   infoMenuText.moveTo(200, 600, 10);
+//   volumeBar.moveTo(200, 630, 10);
+//   volumeDot.moveTo(volume + 130, 628, 10);
+//   volumeText.moveTo(200, 655, 10);
+}
+function showSettings() {
+//   settingsMenu.moveTo(200, 200, 10);
+//   music.moveTo(115, 150, 10);
+//   leftArrow.moveTo(105, 190, 10);
+//   rightArrow.moveTo(135, 190, 10);
+//   musicText.moveTo(225, 150, 10);
+//   songText.moveTo(225, 190, 10);
+//   infoButton.moveTo(110, 285, 10);
+//   infoText.moveTo(225, 285, 10);
+//   volumeBar.moveTo(200, 230, 10);
+//   volumeDot.moveTo(volume + 130, 228, 10);
+//   volumeText.moveTo(200, 255, 10);
 }
 
 
 
 
-
-
-};
 
 
