@@ -104,9 +104,9 @@ target.img.offset.y = -80;
 target.layer = 2;
 
 // settings menu
-let settingsMenu = new Sprite(200, 600, 200, 400);
+let settingsMenu = new Sprite(-400, 0, 430, 490);
 settingsMenu.image = settingsMenuL;
-settingsMenu.scale = .3;
+settingsMenu.scale = .625;
 
 // music
 let music = new Sprite(115, 550, 800, 800);
@@ -207,12 +207,12 @@ waterIcon.image = egg3;
 waterIcon.scale = 0.03;
 
 // shop button
-let shopButton = new Sprite(150, -250, 400, 400);
+let shopButton = new Sprite(160, -260, 400, 400);
 shopButton.image = shopButtonL;
 shopButton.scale = 0.1;
 
 // settings button
-let settingsButton = new Sprite(-150, -250, 400, 400);
+let settingsButton = new Sprite(-160, -260, 400, 400);
 settingsButton.image = settingsButtonL;
 settingsButton.scale = 0.1;
 
@@ -305,13 +305,6 @@ q5.update = function () {
   	}
 	
 	if (page == 0) {
-		// textFont(font2);
-		// settingsButton.img = exButton;
-		// textSize(80);
-		// fill ('#658ca1');
-		// stroke ('#658ca1');
-		// textAlign(CENTER, CENTER);
-		// text('Eggooo!', 0, -80);
 		if 	(mouse.pressed() && pointer.overlapping(startButton)) {
 			startButton.img.offset.y = 10;
 			startButton.img = playButtonClicked;
@@ -345,7 +338,8 @@ q5.update = function () {
 			settingsButton.img.offset.y = -5;
 			settingsButton.img = settingsButtonClicked;
 			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
-			page = 1;
+			page = 3;
+			showSettings();
 		}
 		if (pointer.overlapping(settingsButton)) {
 			settingsButton.img = settingsButtonClicked;
@@ -359,7 +353,7 @@ q5.update = function () {
 			shopButton.img.offset.y = -5;
 			shopButton.img = shopButtonClicked;
 			setTimeout(() => { shopButton.img = shopButtonL; shopButton.img.offset.y = 0;}, 100);
-			page = 1;
+			page = 4;
 		}
 		if (pointer.overlapping(shopButton)) {
 			shopButton.img = shopButtonClicked;
@@ -386,7 +380,22 @@ q5.update = function () {
 			infoButton.img = exButton;
 			infoButton.y = 160;
 		}
-	}
+	} else if (page == 3) {
+		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
+			settingsButton.img.offsety = -5;
+			settingsButton.img = settingsButtonClicked;
+			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
+			page = 1;
+			hideSettings();
+		}
+		if (pointer.overlapping(settingsButton)) {
+			settingsButton.img = settingsButtonClicked;
+			settingsButton.img.offset.y = -5;
+		} else {
+			settingsButton.img = settingsButtonL;
+			settingsButton.img.offset.y = 0;
+		}
+  	}
 };
 //page 0 - start
 //page 1 - main
@@ -401,8 +410,8 @@ function showMain() {
 	titleText.moveTo(160,-180,4.717);
 	titleText.scale = 1/5;
 	infoButton.moveTo(-160,560,10);
-	settingsButton.moveTo(-150, 150, 10);
-	shopButton.moveTo(150, 150, 10);
+	settingsButton.moveTo(-160, 160, 10);
+	shopButton.moveTo(160, 160, 10);
 	scoreMenu.moveTo(-90, -140, 10);
 }
 function hideInfo() {
@@ -418,7 +427,10 @@ function showInfo() {
 
 
 function hideSettings() {
-  settingsMenu.moveTo(200, 600, 10);
+	settingsMenu.moveTo(-400, 0, 10);
+	shopButton.moveTo(160, 160, 10);
+	scoreMenu.moveTo(-90, -140, 10);
+	target.moveTo(0, 50, 10);
 //   music.moveTo(115, 550, 10);
 //   leftArrow.moveTo(105, 590, 10);
 //   rightArrow.moveTo(135, 590, 10);
@@ -433,7 +445,10 @@ function hideSettings() {
 //   volumeText.moveTo(200, 655, 10);
 }
 function showSettings() {
-//   settingsMenu.moveTo(200, 200, 10);
+	settingsMenu.moveTo(0, 0, 10);
+	shopButton.moveTo(560, 160, 10);
+	scoreMenu.moveTo(-90, -540, 10);
+	target.moveTo(0, 450, 10);
 //   music.moveTo(115, 150, 10);
 //   leftArrow.moveTo(105, 190, 10);
 //   rightArrow.moveTo(135, 190, 10);
