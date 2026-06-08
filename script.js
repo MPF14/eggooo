@@ -325,7 +325,7 @@ q5.update = function () {
 		infoButton.img = settingsButtonL;
 		startButton.moveTo(0,300,3);
 		target.moveTo(0,0,3);
-  }
+  } 
   //start button clicked
 	// if (page == 1) {
 	// 	startButton.visible = false;
