@@ -94,9 +94,8 @@ titleGraphics.stroke('#658ca1');
 titleGraphics.strokeWeight(2);
 titleGraphics.textAlign(CENTER, CENTER);
 titleGraphics.textFont(font2);
-titleGraphics.text("Eggooo!", 143, 100);
+titleGraphics.text("eggooo!", 143, 100);
 titleText.img = titleGraphics;
-
 
 let target = new Sprite(0, -350, 400, 225);
 target.img = egg1;
@@ -399,7 +398,8 @@ q5.update = function () {
 function showMain() {
 	startButton.moveTo(0,470,10);
 	target.moveTo(0,50,10);
-	titleText.moveTo(0,320,10);
+	titleText.moveTo(160,-180,4.717);
+	titleText.scale = 1/5;
 	infoButton.moveTo(-160,560,10);
 	settingsButton.moveTo(-150, 150, 10);
 	shopButton.moveTo(150, 150, 10);
