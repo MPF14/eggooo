@@ -95,7 +95,7 @@ g.stroke('#658ca1');
 g.strokeWeight(2);
 g.textAlign(CENTER, CENTER);
 g.textFont(font2);
-g.text("Eggooo!", 140, 100);
+g.text("Eggooo!", 143, 100);
 titleText.img = g;
 
 
@@ -167,16 +167,16 @@ infoText.stroke = '#dcb98a';
 infoText.textColor = '#90625d';
 
 //info menu
-let infoMenu = new Sprite(200, 600, 200, 400);
+let infoMenu = new Sprite(0, 400, 200, 400);
 infoMenu.image = infoMenuL;
-infoMenu.scale = .3;
+infoMenu.scale = .6;
 
-let infoMenuText = new Sprite(200, 600, 10, 10);
-infoMenuText.text = 'Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher';
-infoMenuText.textSize = 14;
-infoMenuText.textColor = '#90625d';
-infoMenuText.color = '#dcb98a';
-infoMenuText.stroke = '#dcb98a';
+// let infoMenuText = new Sprite(0, 400, 10, 10);
+// infoMenuText.text = 'Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher';
+// infoMenuText.textSize = 14;
+// infoMenuText.textColor = '#90625d';
+// infoMenuText.color = '#dcb98a';
+// infoMenuText.stroke = '#dcb98a';
 
 // score menu
 let scoreMenu = new Sprite(-90, -540, 480, 260);
@@ -327,6 +327,7 @@ q5.update = function () {
 			infoButton.img = exButtonClicked;
 			setTimeout(() => { infoButton.img = exButton;}, 100);
 			page = 2;
+			showInfo();
 		}
 		if (pointer.overlapping(infoButton)) {
 			infoButton.img = exButtonClicked;
@@ -385,7 +386,14 @@ q5.update = function () {
 //page 4 - shop
 //page 5 - prestige
 
-
+function hideInfo() {
+  infoMenu.moveTo(0, 400, 10);
+  //infoMenuText.moveTo(0, 400, 10);
+}
+function showInfo() {
+  infoMenu.moveTo(0, 0, 10);
+  //infoMenuText.moveTo(0, 0, 10);
+}
 
 
 
