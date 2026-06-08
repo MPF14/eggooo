@@ -8,11 +8,15 @@ let IconState = 1;
 let scoreText = 'Score=' + score;
 let multiplierText = 'Multiplier=' + multiplier;
 let passiveText = 'Passive =' + passive;
-let playing = 0;
+let playing = 4;
 let volume = 20;
 let rectSprite;
+let songs = ['off','skinny', 'lunch', 'chihiro', 'birds of a feather', 'wildflower', 'the greatest', "l'amor de ma vie", 'the diner', 'bittersuite', 'blue']
 
 await Canvas(400, 400)
+background("#89D5D2");
+textAlign(CENTER, CENTER);
+text("Loading...", 0, 0);
 let font1 = loadFont('assets/pixelFont.ttf');
 let font2 = loadFont('assets/kiwiSoda.ttf')
 await font1;
@@ -104,36 +108,44 @@ target.img.offset.y = -80;
 target.layer = 2;
 
 // settings menu
-let settingsMenu = new Sprite(-400, 0, 430, 490);
+let settingsMenu = new Sprite(-400, -20, 430, 490);
 settingsMenu.image = settingsMenuL;
 settingsMenu.scale = .625;
 
 // music
-let music = new Sprite(115, 550, 800, 800);
-music.image = toggleOn1;
-music.scale = 0.1;
+let music = new Sprite(-495, -75, 230, 150);
+music.image = toggleOff1;
+music.scale = 0.175;
 
-let leftArrow = new Sprite(105, 590, 800, 800);
+let leftArrow = new Sprite(-506, -40, 300, 375);
 leftArrow.image = leftArrow1;
-leftArrow.scale = 0.04;
+leftArrow.scale = 0.06;
 
-let rightArrow = new Sprite(135, 590, 800, 800);
+let rightArrow = new Sprite(-484, -40, 300, 375);
 rightArrow.image = rightArrow1;
-rightArrow.scale = 0.04;
+rightArrow.scale = 0.06;
 
-let musicText = new Sprite(225, 550, 10, 10);
-musicText.text = 'Music on';
-musicText.textSize = 20;
-musicText.color = '#dcb98a';
-musicText.stroke = '#dcb98a';
-musicText.textColor = '#90625d';
+let musicText = new Sprite(-410, -75, 100, 20);
+let musicGraphics = createGraphics(100, 20);
+musicGraphics.textSize(20);
+musicGraphics.fill('#90625d');
+musicGraphics.stroke('#dcb98a');
+musicGraphics.strokeWeight(1);
+musicGraphics.textAlign(LEFT, CENTER);
+musicGraphics.textFont(font1);
+musicGraphics.text('Music off', 0, 10);
+musicText.img = musicGraphics;
 
-let songText = new Sprite(225, 590, 10, 10);
-songText.text = 'Song selector';
-songText.textSize = 20;
-songText.color = '#dcb98a';
-songText.stroke = '#dcb98a';
-songText.textColor = '#90625d';
+let songText = new Sprite(-370, -40, 180, 20);
+let songGraphics = createGraphics(180, 50);
+songGraphics.textSize(20);
+songGraphics.fill('#90625d');
+songGraphics.stroke('#dcb98a');
+songGraphics.strokeWeight(1);
+songGraphics.textAlign(LEFT, CENTER);
+songGraphics.textFont(font1);
+songGraphics.text(songs[playing], 0, 25);
+songText.img = songGraphics;
 
 // volume
 
@@ -340,6 +352,7 @@ q5.update = function () {
 			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
 			page = 3;
 			showSettings();
+			hideMain();
 		}
 		if (pointer.overlapping(settingsButton)) {
 			settingsButton.img = settingsButtonClicked;
@@ -381,12 +394,44 @@ q5.update = function () {
 			infoButton.y = 160;
 		}
 	} else if (page == 3) {
+		settingsButton.img = leftArrow1;
 		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
-			settingsButton.img.offsety = -5;
-			settingsButton.img = settingsButtonClicked;
-			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
+			settingsButton.img.offsety = 10;
+			settingsButton.img = leftArrow2;
+			setTimeout(() => { settingsButton.img = leftArrow1; settingsButton.img.offset.y = 0;}, 100);
 			page = 1;
 			hideSettings();
+			showMain();
+		}
+		if (pointer.overlapping(settingsButton)) {
+			settingsButton.img = leftArrow2;
+			settingsButton.img.offset.y = 10;
+		} else {
+			settingsButton.img = leftArrow1;
+			settingsButton.img.offset.y = 0;
+		}
+
+  	} else if (page == 4) {
+		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
+			shopButton.img.offset.y = -5;
+			shopButton.img = shopButtonClicked;
+			setTimeout(() => { shopButton.img = shopButtonL; shopButton.img.offset.y = 0;}, 100);
+			page = 1;
+		} else if (pointer.overlapping(shopButton)) {
+			shopButton.img = shopButtonClicked;
+			shopButton.img.offset.y = -5;
+		} else {
+			shopButton.img = shopButtonL;
+			shopButton.img.offset.y = 0;
+		}
+
+		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
+			settingsButton.img.offset.y = -5;
+			settingsButton.img = settingsButtonClicked;
+			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
+			page = 3;
+			showSettings();
+			hideMain();
 		}
 		if (pointer.overlapping(settingsButton)) {
 			settingsButton.img = settingsButtonClicked;
@@ -395,7 +440,14 @@ q5.update = function () {
 			settingsButton.img = settingsButtonL;
 			settingsButton.img.offset.y = 0;
 		}
-  	}
+
+		if 	(mouse.pressed() && pointer.overlapping(target)) {
+			target.scale = .27;
+			setTimeout(() => { target.scale = .3;}, 25);
+			score += adder * multiplier;
+		}
+	}
+	
 };
 //page 0 - start
 //page 1 - main
@@ -414,6 +466,11 @@ function showMain() {
 	shopButton.moveTo(160, 160, 10);
 	scoreMenu.moveTo(-90, -140, 10);
 }
+function hideMain() {
+	shopButton.moveTo(560, 160, 10);
+	scoreMenu.moveTo(-90, -540, 10);
+	target.moveTo(0, 450, 10);
+}
 function hideInfo() {
   	infoMenu.moveTo(0, 400, 10);
 	infoText.moveTo(0, 285, 10);
@@ -427,10 +484,15 @@ function showInfo() {
 
 
 function hideSettings() {
-	settingsMenu.moveTo(-400, 0, 10);
-	shopButton.moveTo(160, 160, 10);
-	scoreMenu.moveTo(-90, -140, 10);
-	target.moveTo(0, 50, 10);
+	settingsMenu.moveTo(-400, -20, 10);
+	music.moveTo(-495, -75, 10);
+	leftArrow.moveTo(-506, -40, 10)
+	rightArrow.moveTo(-486, -40, 10)
+	musicText.moveTo(-410, -75, 10)
+	songText.moveTo(-370, -40, 10)
+	// shopButton.moveTo(160, 160, 10);
+	// scoreMenu.moveTo(-90, -140, 10);
+	// target.moveTo(0, 50, 10);
 //   music.moveTo(115, 550, 10);
 //   leftArrow.moveTo(105, 590, 10);
 //   rightArrow.moveTo(135, 590, 10);
@@ -445,10 +507,15 @@ function hideSettings() {
 //   volumeText.moveTo(200, 655, 10);
 }
 function showSettings() {
-	settingsMenu.moveTo(0, 0, 10);
-	shopButton.moveTo(560, 160, 10);
-	scoreMenu.moveTo(-90, -540, 10);
-	target.moveTo(0, 450, 10);
+	settingsMenu.moveTo(0, -20, 10);
+	music.moveTo(-95, -75, 10);
+	leftArrow.moveTo(-106, -40, 10)
+	rightArrow.moveTo(-86, -40, 10)
+	musicText.moveTo(-10, -75, 10)
+	songText.moveTo(30, -40, 10)
+	// shopButton.moveTo(560, 160, 10);
+	// scoreMenu.moveTo(-90, -540, 10);
+	// target.moveTo(0, 450, 10);
 //   music.moveTo(115, 150, 10);
 //   leftArrow.moveTo(105, 190, 10);
 //   rightArrow.moveTo(135, 190, 10);
