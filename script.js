@@ -223,82 +223,82 @@ let settingsButton = new Sprite(-160, -260, 400, 400);
 settingsButton.image = settingsButtonL;
 settingsButton.scale = 0.1;
 
-// // shop menu
-// let shopMenu = new Sprite(500, 200, 200, 400);
-// shopMenu.image = shopMenuL;
-// shopMenu.scale = .44;
+// shop menu
+let shopMenu = new Sprite(90, 0, 210, 430);
+shopMenu.image = shopMenuL;
+shopMenu.scale = .85;
 
-// // prestige button
-// let prestigeButton = new Sprite(500, 355, 700, 200);
-// prestigeButton.image = prestigeButtonL;
-// prestigeButton.scale = .2;
+// prestige button
+let prestigeButton = new Sprite(90, 150, 360, 100);
+prestigeButton.image = prestigeButtonL;
+prestigeButton.scale = .4;
 
-// // shop menu buttons
-// let shopMenuButton1 = new Sprite(450, 50, 700, 700);
-// shopMenuButton1.image = squareButton;
-// shopMenuButton1.scale = .05;
+// shop menu buttons
+let shopMenuButton1 = new Sprite(30, -110, 400, 450);
+shopMenuButton1.image = squareButton;
+shopMenuButton1.scale = .075;
 
-// let shopMenuText1 = new Sprite(530, 50, 100, 35);
-// shopMenuText1.text = 'COST: 50 \n1 CPC';
-// shopMenuText1.textColor = '#90625d';
-// shopMenuText1.color = '#dcb98a';
-// shopMenuText1.stroke = '#dcb98a';
-
-
-// let shopMenuButton2 = new Sprite(450, 100, 700, 700);
-// shopMenuButton2.image = squareButton;
-// shopMenuButton2.scale = .05;
-
-// let shopMenuText2 = new Sprite(530, 100, 100, 35);
-// shopMenuText2.text = 'COST: 1000 \n5 CPS';
-// shopMenuText2.textColor = '#90625d';
-// shopMenuText2.color = '#dcb98a';
-// shopMenuText2.stroke = '#dcb98a';
+let shopMenuText1 = new Sprite(530, 50, 100, 35);
+shopMenuText1.text = 'COST: 50 \n1 CPC';
+shopMenuText1.textColor = '#90625d';
+shopMenuText1.color = '#dcb98a';
+shopMenuText1.stroke = '#dcb98a';
 
 
-// let shopMenuButton3 = new Sprite(450, 150, 700, 700);
-// shopMenuButton3.image = squareButton;
-// shopMenuButton3.scale = .05;
+let shopMenuButton2 = new Sprite(30, -70, 400, 450);
+shopMenuButton2.image = squareButton;
+shopMenuButton2.scale = .075;
 
-// let shopMenuText3 = new Sprite(530, 150, 100, 35);
-// shopMenuText3.text = 'COST: 25000 \n300 CPC';
-// shopMenuText3.textColor = '#90625d';
-// shopMenuText3.color = '#dcb98a';
-// shopMenuText3.stroke = '#dcb98a';
+let shopMenuText2 = new Sprite(530, 100, 100, 35);
+shopMenuText2.text = 'COST: 1000 \n5 CPS';
+shopMenuText2.textColor = '#90625d';
+shopMenuText2.color = '#dcb98a';
+shopMenuText2.stroke = '#dcb98a';
 
-// let shopMenuButton4 = new Sprite(450, 200, 700, 700);
-// shopMenuButton4.image = squareButton;
-// shopMenuButton4.scale = .05;
 
-// let shopMenuText4 = new Sprite(530, 200, 100, 35);
-// shopMenuText4.text = 'COST: 5a \n30,000 CPS';
-// shopMenuText4.textColor = '#90625d';
-// shopMenuText4.color = '#dcb98a';
-// shopMenuText4.stroke = '#dcb98a';
+let shopMenuButton3 = new Sprite(30, -30, 400, 450);
+shopMenuButton3.image = squareButton;
+shopMenuButton3.scale = .075;
 
-// let shopMenuButton5 = new Sprite(450, 250, 700, 700);
-// shopMenuButton5.image = squareButton;
-// shopMenuButton5.scale = .05;
+let shopMenuText3 = new Sprite(530, 150, 100, 35);
+shopMenuText3.text = 'COST: 25000 \n300 CPC';
+shopMenuText3.textColor = '#90625d';
+shopMenuText3.color = '#dcb98a';
+shopMenuText3.stroke = '#dcb98a';
 
-// let shopMenuText5 = new Sprite(530, 250, 100, 35);
-// shopMenuText5.text = 'COST: 250a \n3a CPC';
-// shopMenuText5.textColor = '#90625d';
-// shopMenuText5.color = '#dcb98a';
-// shopMenuText5.stroke = '#dcb98a';
+let shopMenuButton4 = new Sprite(30, 10, 400, 450);
+shopMenuButton4.image = squareButton;
+shopMenuButton4.scale = .075;
 
-// let shopMenuButton6 = new Sprite(450, 300, 700, 700);
-// shopMenuButton6.image = squareButton;
-// shopMenuButton6.scale = .05;
+let shopMenuText4 = new Sprite(530, 200, 100, 35);
+shopMenuText4.text = 'COST: 5a \n30,000 CPS';
+shopMenuText4.textColor = '#90625d';
+shopMenuText4.color = '#dcb98a';
+shopMenuText4.stroke = '#dcb98a';
 
-// let shopMenuText6 = new Sprite(530, 300, 100, 35);
-// shopMenuText6.text = 'COST: 100b \n500a CPS';
-// shopMenuText6.textColor = '#90625d';
-// shopMenuText6.color = '#dcb98a';
-// shopMenuText6.stroke = '#dcb98a';
+let shopMenuButton5 = new Sprite(30, 50, 400, 450);
+shopMenuButton5.image = squareButton;
+shopMenuButton5.scale = .075;
+
+let shopMenuText5 = new Sprite(530, 250, 100, 35);
+shopMenuText5.text = 'COST: 250a \n3a CPC';
+shopMenuText5.textColor = '#90625d';
+shopMenuText5.color = '#dcb98a';
+shopMenuText5.stroke = '#dcb98a';
+
+let shopMenuButton6 = new Sprite(30, 95, 400, 450);
+shopMenuButton6.image = squareButton;
+shopMenuButton6.scale = .075;
+
+let shopMenuText6 = new Sprite(530, 300, 100, 35);
+shopMenuText6.text = 'COST: 100b \n500a CPS';
+shopMenuText6.textColor = '#90625d';
+shopMenuText6.color = '#dcb98a';
+shopMenuText6.stroke = '#dcb98a';
 
 
 allSprites.passes(allSprites);
-//allSprites.debug = true;
+allSprites.debug = true;
 
 q5.update = function () {
  	background("#89D5D2");
