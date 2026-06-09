@@ -1,18 +1,18 @@
 let score = 0;
-let adder = 1;
 let multiplier = 1;
 let passive = 0;
 let page = 0;
 let prestige = 1;
 let IconState = 1;
-let scoreText = 'Score=' + score;
-let multiplierText = 'Multiplier=' + multiplier;
-let passiveText = 'Passive =' + passive;
-let playing = 4;
-let volume = 20;
+let scoreText = 'Score = ' + score;
+let multiplierText = 'Multiplier = ' + multiplier;
+let passiveText = 'Passive = ' + passive;
+let playing = 0;
+let volume = 10;
 let rectSprite;
 let musicLabel = ['Music off', 'Music on', 'Music on', 'Music on', 'Music onn', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on'];
-let songs = ['off','skinny', 'lunch', 'chihiro', 'birds of a feather', 'wildflower', 'the greatest', "l'amor de ma vie", 'the diner', 'bittersuite', 'blue']
+let songs = ['off','skinny', 'lunch', 'chihiro', 'birds of a feather', 'wildflower', 'the greatest', "l'amor de ma vie", 'the diner', 'bittersuite', 'blue'];
+let lastSong = playing;
 
 await Canvas(400, 400)
 background("#89D5D2");
@@ -83,7 +83,8 @@ let audio7 = await loadSound("assets/audio/L'AMOURDEMAVIE.mp3");
 let audio8 = await loadSound('assets/audio/THEDINER.mp3');
 let audio9 = await loadSound('assets/audio/BITTERSUITE.mp3');
 let audio10 = await loadSound('assets/audio/BLUE.mp3');
-
+let bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9];
+let audios = [audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9, audio10]
 let startButton = new Sprite(0, 70, 350, 100);
 startButton.image = playButton;
 startButton.scale = .6;
@@ -145,8 +146,6 @@ songGraphics.textFont(font1);
 songGraphics.text(songs[playing], 0, 25);
 songText.image = songGraphics;
 
-// volume
-
 let volumeBar = new Sprite(-400, 0, 360, 30); //(200,280,140,13)
 volumeBar.image = bar5;
 volumeBar.scale = .5;
@@ -155,14 +154,6 @@ let volumeDot = new Sprite(-400, 0, 50, 60);
 volumeDot.image = slideDot;
 volumeDot.scale = .5;
 
-let volumeText = new Sprite(200, 655, 10, 10);
-volumeText.text = 'Volume: ' + round(volume / 14);
-volumeText.textSize = 20;
-volumeText.color = '#dcb98a';
-volumeText.stroke = '#dcb98a';
-volumeText.textColor = '#90625d';
-
-//info button
 let infoButton = new Sprite(-160, 160, 400, 400);
 infoButton.image = exButton;
 infoButton.scale = 0.1;
@@ -171,7 +162,7 @@ let infoMenu = new Sprite(0, 400, 430, 490);
 infoMenu.image = infoMenuL;
 infoMenu.scale = .625;
 
-let infoText = new Sprite(0, 285, 100, 100);
+let infoText = new Sprite(0, 285, 60, 30);
 let infoGraphics = createGraphics(300, 200);
 infoGraphics.textSize(35);
 infoGraphics.fill('#90625d');
@@ -182,8 +173,7 @@ infoGraphics.textFont(font2);
 infoGraphics.text("Info", 150, 100);
 infoText.image = infoGraphics;
 
-
-let infoMenuText = new Sprite(0, 490, 10, 10);
+let infoMenuText = new Sprite(0, 490, 200, 150);
 let infoMenuGraphics = createGraphics(300, 400);
 infoMenuGraphics.textSize(13);
 infoMenuGraphics.fill('#90625d');
@@ -194,28 +184,34 @@ infoMenuGraphics.textFont(font1);
 infoMenuGraphics.text('Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher', 150, 20);
 infoMenuText.image = infoMenuGraphics;
 
-// score menu
 let scoreMenu = new Sprite(-90, -540, 480, 260);
 scoreMenu.image = scoreMenuL;
 scoreMenu.scale = .4;
-// scoreMenu.textSize = 15;
-// scoreMenu.textColor = '#90625d';
-// scoreMenu.text = scoreText + '\n\n' + multiplierText + '\n\n' + passiveText;
 
-// coin icon
-let coinIcon = new Sprite(-375, 23, 50, 50);
+let scoreboardText = new Sprite(-90, -540, 192, 104);
+let scoreboardGraphics = createGraphics(192,104);
+scoreboardGraphics.textSize(15);
+scoreboardGraphics.fill('#90625d');
+scoreboardGraphics.strokeWeight(1);
+scoreboardGraphics.textAlign(LEFT, CENTER);
+scoreboardGraphics.textFont(font1);
+scoreboardGraphics.text(scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 35, 52);
+scoreboardText.image = scoreboardGraphics;
+
+// // coin icon
+let coinIcon = new Sprite(-170, -577, 300, 450);
 coinIcon.image = coinIcon1;
-coinIcon.scale = 0.03;
+coinIcon.scale = 0.06;
 
 // tool icon
-let toolIcon = new Sprite(-373, 65, 50, 50);
-toolIcon.image = egg3;
-toolIcon.scale = 0.03;
+let toolIcon = new Sprite(-170, -540, 300, 450);
+toolIcon.image = toolIcon1;
+toolIcon.scale = 0.05;
 
 // water icon
-let waterIcon = new Sprite(-373, 100, 50, 50);
-waterIcon.image = egg3;
-waterIcon.scale = 0.03;
+let waterIcon = new Sprite(-170, -507, 300, 450);
+waterIcon.image = waterIcon1;
+waterIcon.scale = 0.06;
 
 // shop button
 let shopButton = new Sprite(160, -260, 400, 400);
@@ -227,104 +223,128 @@ let settingsButton = new Sprite(-160, -260, 400, 400);
 settingsButton.image = settingsButtonL;
 settingsButton.scale = 0.1;
 
-// shop menu
-let shopMenu = new Sprite(500, 200, 200, 400);
-shopMenu.image = shopMenuL;
-shopMenu.scale = .44;
+// // shop menu
+// let shopMenu = new Sprite(500, 200, 200, 400);
+// shopMenu.image = shopMenuL;
+// shopMenu.scale = .44;
 
-// prestige button
-let prestigeButton = new Sprite(500, 355, 700, 200);
-prestigeButton.image = prestigeButtonL;
-prestigeButton.scale = .2;
+// // prestige button
+// let prestigeButton = new Sprite(500, 355, 700, 200);
+// prestigeButton.image = prestigeButtonL;
+// prestigeButton.scale = .2;
 
-// shop menu buttons
-let shopMenuButton1 = new Sprite(450, 50, 700, 700);
-shopMenuButton1.image = squareButton;
-shopMenuButton1.scale = .05;
+// // shop menu buttons
+// let shopMenuButton1 = new Sprite(450, 50, 700, 700);
+// shopMenuButton1.image = squareButton;
+// shopMenuButton1.scale = .05;
 
-let shopMenuText1 = new Sprite(530, 50, 100, 35);
-shopMenuText1.text = 'COST: 50 \n1 CPC';
-shopMenuText1.textColor = '#90625d';
-shopMenuText1.color = '#dcb98a';
-shopMenuText1.stroke = '#dcb98a';
-
-
-let shopMenuButton2 = new Sprite(450, 100, 700, 700);
-shopMenuButton2.image = squareButton;
-shopMenuButton2.scale = .05;
-
-let shopMenuText2 = new Sprite(530, 100, 100, 35);
-shopMenuText2.text = 'COST: 1000 \n5 CPS';
-shopMenuText2.textColor = '#90625d';
-shopMenuText2.color = '#dcb98a';
-shopMenuText2.stroke = '#dcb98a';
+// let shopMenuText1 = new Sprite(530, 50, 100, 35);
+// shopMenuText1.text = 'COST: 50 \n1 CPC';
+// shopMenuText1.textColor = '#90625d';
+// shopMenuText1.color = '#dcb98a';
+// shopMenuText1.stroke = '#dcb98a';
 
 
-let shopMenuButton3 = new Sprite(450, 150, 700, 700);
-shopMenuButton3.image = squareButton;
-shopMenuButton3.scale = .05;
+// let shopMenuButton2 = new Sprite(450, 100, 700, 700);
+// shopMenuButton2.image = squareButton;
+// shopMenuButton2.scale = .05;
 
-let shopMenuText3 = new Sprite(530, 150, 100, 35);
-shopMenuText3.text = 'COST: 25000 \n300 CPC';
-shopMenuText3.textColor = '#90625d';
-shopMenuText3.color = '#dcb98a';
-shopMenuText3.stroke = '#dcb98a';
+// let shopMenuText2 = new Sprite(530, 100, 100, 35);
+// shopMenuText2.text = 'COST: 1000 \n5 CPS';
+// shopMenuText2.textColor = '#90625d';
+// shopMenuText2.color = '#dcb98a';
+// shopMenuText2.stroke = '#dcb98a';
 
-let shopMenuButton4 = new Sprite(450, 200, 700, 700);
-shopMenuButton4.image = squareButton;
-shopMenuButton4.scale = .05;
 
-let shopMenuText4 = new Sprite(530, 200, 100, 35);
-shopMenuText4.text = 'COST: 5a \n30,000 CPS';
-shopMenuText4.textColor = '#90625d';
-shopMenuText4.color = '#dcb98a';
-shopMenuText4.stroke = '#dcb98a';
+// let shopMenuButton3 = new Sprite(450, 150, 700, 700);
+// shopMenuButton3.image = squareButton;
+// shopMenuButton3.scale = .05;
 
-let shopMenuButton5 = new Sprite(450, 250, 700, 700);
-shopMenuButton5.image = squareButton;
-shopMenuButton5.scale = .05;
+// let shopMenuText3 = new Sprite(530, 150, 100, 35);
+// shopMenuText3.text = 'COST: 25000 \n300 CPC';
+// shopMenuText3.textColor = '#90625d';
+// shopMenuText3.color = '#dcb98a';
+// shopMenuText3.stroke = '#dcb98a';
 
-let shopMenuText5 = new Sprite(530, 250, 100, 35);
-shopMenuText5.text = 'COST: 250a \n3a CPC';
-shopMenuText5.textColor = '#90625d';
-shopMenuText5.color = '#dcb98a';
-shopMenuText5.stroke = '#dcb98a';
+// let shopMenuButton4 = new Sprite(450, 200, 700, 700);
+// shopMenuButton4.image = squareButton;
+// shopMenuButton4.scale = .05;
 
-let shopMenuButton6 = new Sprite(450, 300, 700, 700);
-shopMenuButton6.image = squareButton;
-shopMenuButton6.scale = .05;
+// let shopMenuText4 = new Sprite(530, 200, 100, 35);
+// shopMenuText4.text = 'COST: 5a \n30,000 CPS';
+// shopMenuText4.textColor = '#90625d';
+// shopMenuText4.color = '#dcb98a';
+// shopMenuText4.stroke = '#dcb98a';
 
-let shopMenuText6 = new Sprite(530, 300, 100, 35);
-shopMenuText6.text = 'COST: 100b \n500a CPS';
-shopMenuText6.textColor = '#90625d';
-shopMenuText6.color = '#dcb98a';
-shopMenuText6.stroke = '#dcb98a';
+// let shopMenuButton5 = new Sprite(450, 250, 700, 700);
+// shopMenuButton5.image = squareButton;
+// shopMenuButton5.scale = .05;
+
+// let shopMenuText5 = new Sprite(530, 250, 100, 35);
+// shopMenuText5.text = 'COST: 250a \n3a CPC';
+// shopMenuText5.textColor = '#90625d';
+// shopMenuText5.color = '#dcb98a';
+// shopMenuText5.stroke = '#dcb98a';
+
+// let shopMenuButton6 = new Sprite(450, 300, 700, 700);
+// shopMenuButton6.image = squareButton;
+// shopMenuButton6.scale = .05;
+
+// let shopMenuText6 = new Sprite(530, 300, 100, 35);
+// shopMenuText6.text = 'COST: 100b \n500a CPS';
+// shopMenuText6.textColor = '#90625d';
+// shopMenuText6.color = '#dcb98a';
+// shopMenuText6.stroke = '#dcb98a';
+
+
 allSprites.passes(allSprites);
-allSprites.debug = true;
-
+//allSprites.debug = true;
 
 q5.update = function () {
  	background("#89D5D2");
 	titleText.image = titleGraphics;
 	infoMenuText.image = infoMenuGraphics;
 	infoText.image = infoGraphics;
-
-	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
-
-
+	audios[playing].setVolume(volume/200);
+	toolIcon.image.offset.y = -30;
+	toolIcon.image.offset.x = 55;
+	coinIcon.image.offset.x = 15;
+	// setTimeout(() => {lastSong = playing;},1000);
+	// if (lastSong != playing) {
+	// 	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
+	// 	console.log("updating");
+	// }
+	coinIcon.image =
+    floor(millis() / 650) % 2
+        ? coinIcon2
+        : coinIcon1;
+	toolIcon.image =
+    floor(millis() / 650) % 2
+        ? toolIcon2
+        : toolIcon1;
+	waterIcon.image =
+    floor(millis() / 650) % 2
+        ? waterIcon2
+        : waterIcon1;
 	if (playing == 0) {
 		music.image = toggleOff1;
 	} else {
 		music.image = toggleOn1;
 	}
-	
+	// for (const song of audios) {
+    // 	if (playing == song && audios[song].isPlaying() == false) {
+	// 		audios[song].play();
+	// 		if (song != 10) {song +=1;} else {song = 1}
+	// 	}
+	// }
 	if (page == 0) {
 		if 	(mouse.pressed() && pointer.overlapping(startButton)) {
 			startButton.image.offset.y = 10;
 			startButton.image = playButtonClicked;
 			setTimeout(() => {startButton.image = playButton; startButton.image.offset.y = 0;}, 100);
 			page = 1;
-			showMain();
+			showMain(false);
+			startAudio();
 		}
 		if (pointer.overlapping(startButton)) {
 			startButton.image = playButtonClicked;
@@ -336,7 +356,7 @@ q5.update = function () {
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(infoButton)) {
-			infoButton.image.offsety = -5;
+			infoButton.image.offset.y = -5;
 			infoButton.image = exButtonClicked;
 			setTimeout(() => { infoButton.image = exButton; page = 2; infoButton.image.offset.y = 0;}, 100);
 		}
@@ -381,7 +401,8 @@ q5.update = function () {
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
-			score += adder * multiplier;
+			score += multiplier;
+			//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
 		}
   	} else if (page == 2) {
 		showInfo();
@@ -398,7 +419,7 @@ q5.update = function () {
 	} else if (page == 3) {
 		settingsButton.image = leftArrow1;
 		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
-			settingsButton.image.offsety = 10;
+			settingsButton.image.offset.y = 10;
 			settingsButton.image = leftArrow2;
 			setTimeout(() => { settingsButton.image = leftArrow1; settingsButton.image.offset.y = 0;}, 100);
 			page = 1;
@@ -414,8 +435,73 @@ q5.update = function () {
 		}
 		
 		if 	(mouse.pressed() && pointer.overlapping(music)) {
-			playing = 1-ceil(playing/10);
-			updateGraphics(musicText, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
+			if (playing != 0) {
+				stopAllAudio();
+			} else {
+				startAudio();
+			}
+		}
+
+		if 	(mouse.pressing() && (pointer.overlapping(volumeBar) || pointer.overlapping(volumeDot))) {
+			volume = mouse.x+101.25;
+			volumeBar.image = bars[floor(volume/22.5)];
+			if (abs(mouse.x)<90) {volumeDot.x = mouse.x;}
+			console.log(volume,audios[playing].volume);
+		}
+
+		if 	(mouse.pressed() && pointer.overlapping(leftArrow)) {
+			leftArrow.image.offset.y = 5;
+			leftArrow.image = leftArrow2;
+			setTimeout(() => {leftArrow.image = leftArrow1; leftArrow.image.offset.y = 0;}, 100);
+			if (playing!=1) {playing -= 1;} else {playing = 10;}
+			startAudio();
+		}
+		if (pointer.overlapping(leftArrow)) {
+			leftArrow.image.offset.y = 5;
+			leftArrow.image = leftArrow2;
+		} else {
+			leftArrow.image.offset.y = 0;
+			leftArrow.image = leftArrow1;
+		}
+		if 	(mouse.pressed() && pointer.overlapping(rightArrow)) {
+			rightArrow.image.offset.y = 5;
+			rightArrow.image = rightArrow2;
+			setTimeout(() => {rightArrow.image = rightArrow1; rightArrow.image.offset.y = 0;}, 100);
+			if (playing!=10) {playing += 1;} else {playing = 1}
+			startAudio();
+		}
+
+		if (pointer.overlapping(rightArrow)) {
+			rightArrow.image.offset.y = 5;
+			rightArrow.image = rightArrow2;
+		} else {
+			rightArrow.image.offset.y = 0;
+			rightArrow.image = rightArrow1;
+		}
+
+		if 	(mouse.pressed() && pointer.overlapping(infoButton)) {
+			infoButton.image.offset.y = -5;
+			infoButton.image = exButtonClicked;
+			page = 3.5;
+			showInfo(20);
+		}
+		if (pointer.overlapping(infoButton)) {
+			infoButton.image = exButtonClicked;
+			infoButton.image.offset.y = -5;
+		} else {
+			infoButton.image = exButton;
+			infoButton.image.offset.y = 0;
+		}
+	} else if (page == 3.5){
+		if 	(mouse.pressed()) {
+			page = 3;
+			hideInfo();
+		} else if (pointer.overlapping(infoButton)) {
+			infoButton.image = exButtonClicked;
+			infoButton.image.offset.y = -5;
+		} else {
+			infoButton.image = exButton;
+			infoButton.image.offset.y = 0;
 		}
   	} else if (page == 4) {
 		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
@@ -450,7 +536,8 @@ q5.update = function () {
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
-			score += adder * multiplier;
+			score += multiplier;
+			//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
 		}
 	}
 };
@@ -461,30 +548,42 @@ q5.update = function () {
 //page 4 - shop 1/2
 //page 5 - prestige 1/2
 
-function showMain() {
+function showMain(bleh = true) {
 	startButton.moveTo(0,470,10);
 	target.moveTo(0,50,10);
 	titleText.moveTo(160,-180,4.717);
 	titleText.scale = 1/5;
-	infoButton.moveTo(-160,560,10);
 	settingsButton.moveTo(-160, 160, 10);
 	shopButton.moveTo(160, 160, 10);
 	scoreMenu.moveTo(-90, -140, 10);
+	coinIcon.moveTo(-170, -177, 10);
+	toolIcon.moveTo(-170, -140, 10);
+	waterIcon.moveTo(-170, -107, 10);
+	scoreboardText.moveTo(-90, -140, 10);
+	if (bleh) {
+		infoButton.moveTo(-500,100,10);
+	} else {
+		infoButton.x = -500;
+		infoButton.y = 100;}
 }
 function hideMain() {
 	shopButton.moveTo(560, 160, 10);
 	scoreMenu.moveTo(-90, -540, 10);
+	scoreboardText.moveTo(-90, -540, 10);
 	target.moveTo(0, 450, 10);
+	coinIcon.moveTo(-170, -577, 10);
+	toolIcon.moveTo(-170, -540, 10);
+	waterIcon.moveTo(-170, -507, 10);
 }
 function hideInfo() {
   	infoMenu.moveTo(0, 400, 10);
 	infoText.moveTo(0, 285, 10);
   	infoMenuText.moveTo(0, 490, 10);
 }
-function showInfo() {
-  	infoMenu.moveTo(0, 0, 10);
-	infoText.moveTo(0, -115, 10);
-  	infoMenuText.moveTo(0, 90, 10);
+function showInfo(bleh = 0) {
+  	infoMenu.moveTo(0, 0-bleh, 10);
+	infoText.moveTo(0, -115-bleh, 10);
+  	infoMenuText.moveTo(0, 90-bleh, 10);
 }
 function hideSettings() {
 	settingsMenu.moveTo(-400, -20, 10);
@@ -495,6 +594,7 @@ function hideSettings() {
 	songText.moveTo(-370, -40, 10);
 	volumeBar.moveTo(-400, 0, 10);
 	volumeDot.moveTo(-400, 0, 10);
+	infoButton.moveTo(-500,100,10);
 }
 function showSettings() {
 	settingsMenu.moveTo(0, -20, 10);
@@ -505,39 +605,48 @@ function showSettings() {
 	songText.moveTo(30, -40, 10);
 	volumeBar.moveTo(0, 0, 10);
 	volumeDot.moveTo(0, 0, 10);
+	infoButton.moveTo(-100,100,10);
 }
-// function updateGraphics(sprite, size) {
-//     let g = createGraphics(100, 20);
-
-//     g.textSize(size);
-//     g.fill('#90625d');
-//     g.stroke('#dcb98a');
-//     g.strokeWeight(1);
-//     g.textAlign(LEFT, CENTER);
-//     g.textFont(font1);
-
-//     g.text(playing ? 'Music on' : 'Music off', 0, 10);
-
-//     sprite.image = g;
-// }
-
-
-function updateGraphics(sprite, text, size, width, lenght, color, outline, alignx = CENTER, aligny = CENTER, font = font1, x = 0, y = 0, weight = 1) {
-    let g = createGraphics(width, lenght);
-
+function updateGraphics(sprite, text, size, width, length, color, outline, alignx = CENTER, aligny = CENTER, font = font1, x = 0, y = 0, weight = 1) {
+    let g = createGraphics(width, length);
     g.textSize(size);
     g.fill(color);
     g.stroke(outline);
     g.strokeWeight(weight);
     g.textAlign(alignx, aligny);
     g.textFont(font);
-
     g.text(text, x, y);
-
     sprite.image = g;
 }
-// updateGraphics(music, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
+function updateMusicLabels(){
+	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
+	updateGraphics(musicText, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
+	//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
+}
+function stopAllAudio() {
+    for (let song of audios) {
+        song.stop();
+    }
+	playing = 0;
+	updateMusicLabels();
+}
+function startAudio(){
+	console.log(playing);
+	for (let song of audios) {
+        song.stop();}
+	if (playing != 0) {
+		audios[playing].play();
+	} else {
+		audio1.play();
+		playing = 1;}
+	updateMusicLabels();
+}
+function setFavicon(path) {
+    document.getElementById('favicon').href = path;
+}
 
-
-
-
+// function animate(sprite, s1, s2, time){
+// 	sprite.image = s1;
+// 	setTimeout(() => { sprite.image = s2;}, time);
+// 	animate(sprite, s1, s2, time);
+// }
