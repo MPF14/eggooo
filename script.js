@@ -402,8 +402,8 @@ q5.update = function () {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
 			score += multiplier;
-			//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
-		}
+			scoreboard();
+			}
   	} else if (page == 2) {
 		showInfo();
 		if 	(mouse.pressed()) {
@@ -537,8 +537,8 @@ q5.update = function () {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
 			score += multiplier;
-			//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
-		}
+			scoreboard();
+			}
 	}
 };
 //page 0 - start
@@ -621,8 +621,23 @@ function updateGraphics(sprite, text, size, width, length, color, outline, align
 function updateMusicLabels(){
 	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
 	updateGraphics(musicText, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
-	//updateGraphics(scoreboardText, scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 15, 192, 104, '#90625d','#dcb98a', LEFT, CENTER, font1, 0, 35, 52)
+	}
+
+function scoreboard(){
+	scoreText = 'Score = ' + score;
+	multiplierText = 'Multiplier = ' + multiplier;
+	passiveText = 'Passive = ' + passive;
+	let g = createGraphics(192,104);
+	g.textSize(15);
+	g.fill('#90625d');
+	g.stroke('#dcb98a');
+	g.strokeWeight(1);
+	g.textAlign(LEFT, CENTER);
+	g.textFont(font1);
+	g.text(scoreText + '\n\n' + multiplierText + '\n\n' + passiveText, 35, 52);
+	scoreboardText.image = g;
 }
+
 function stopAllAudio() {
     for (let song of audios) {
         song.stop();
@@ -644,9 +659,3 @@ function startAudio(){
 function setFavicon(path) {
     document.getElementById('favicon').href = path;
 }
-
-// function animate(sprite, s1, s2, time){
-// 	sprite.image = s1;
-// 	setTimeout(() => { sprite.image = s2;}, time);
-// 	animate(sprite, s1, s2, time);
-// }
