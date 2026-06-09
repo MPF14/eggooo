@@ -11,16 +11,15 @@ let passiveText = 'Passive =' + passive;
 let playing = 4;
 let volume = 20;
 let rectSprite;
+let musicLabel = ['Music off', 'Music on', 'Music on', 'Music on', 'Music onn', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on'];
 let songs = ['off','skinny', 'lunch', 'chihiro', 'birds of a feather', 'wildflower', 'the greatest', "l'amor de ma vie", 'the diner', 'bittersuite', 'blue']
 
 await Canvas(400, 400)
 background("#89D5D2");
 textAlign(CENTER, CENTER);
 text("Loading...", 0, 0);
-let font1 = loadFont('assets/pixelFont.ttf');
-let font2 = loadFont('assets/kiwiSoda.ttf')
-await font1;
-await font2;
+let font1 = await loadFont('assets/pixelFont.ttf');
+let font2 = await loadFont('assets/kiwiSoda.ttf')
 let bar1 = loadImage('assets/bar1.png');
 let bar2 = loadImage('assets/bar2.png');
 let bar3 = loadImage('assets/bar3.png');
@@ -74,19 +73,19 @@ let upArrow2 = loadImage('assets/upArrow2.png');
 let waterIcon1 = loadImage('assets/waterIcon1.png');
 let waterIcon2 = loadImage('assets/waterIcon2.png');
 
-let audio1 = loadSound('assets/audio/SKINNY.mp3');
-let audio2 = loadSound('assets/audio/LUNCH.mp3');
-let audio3 = loadSound('assets/audio/CHIHIRO.mp3');
-let audio4 = loadSound('assets/audio/BIRDSOFAFEATHER.mp3');
-let audio5 = loadSound('assets/audio/WILDFLOWER.mp3');
-let audio6 = loadSound('assets/audio/THEGREATEST.mp3');
-let audio7 = loadSound("assets/audio/L'AMOURDEMAVIE.mp3");
-let audio8 = loadSound('assets/audio/THEDINER.mp3');
-let audio9 = loadSound('assets/audio/BITTERSUITE.mp3');
-let audio10 = loadSound('assets/audio/BLUE.mp3');
+let audio1 = await loadSound('assets/audio/SKINNY.mp3');
+let audio2 = await loadSound('assets/audio/LUNCH.mp3');
+let audio3 = await loadSound('assets/audio/CHIHIRO.mp3');
+let audio4 = await loadSound('assets/audio/BIRDSOFAFEATHER.mp3');
+let audio5 = await loadSound('assets/audio/WILDFLOWER.mp3');
+let audio6 = await loadSound('assets/audio/THEGREATEST.mp3');
+let audio7 = await loadSound("assets/audio/L'AMOURDEMAVIE.mp3");
+let audio8 = await loadSound('assets/audio/THEDINER.mp3');
+let audio9 = await loadSound('assets/audio/BITTERSUITE.mp3');
+let audio10 = await loadSound('assets/audio/BLUE.mp3');
 
 let startButton = new Sprite(0, 70, 350, 100);
-startButton.img = playButton;
+startButton.image = playButton;
 startButton.scale = .6;
 startButton.layer = 1;
 
@@ -95,16 +94,15 @@ let titleGraphics = createGraphics(280, 200);
 titleGraphics.textSize(80);
 titleGraphics.fill('#658ca1');
 titleGraphics.stroke('#658ca1');
-titleGraphics.strokeWeight(2);
 titleGraphics.textAlign(CENTER, CENTER);
 titleGraphics.textFont(font2);
-titleGraphics.text("eggooo!", 143, 100);
-titleText.img = titleGraphics;
+titleGraphics.text("eggooo!", 142, 100);
+titleText.image = titleGraphics;
 
 let target = new Sprite(0, -350, 400, 225);
-target.img = egg1;
+target.image = egg1;
 target.scale = .3;
-target.img.offset.y = -80;
+target.image.offset.y = -80;
 target.layer = 2;
 
 // settings menu
@@ -133,8 +131,8 @@ musicGraphics.stroke('#dcb98a');
 musicGraphics.strokeWeight(1);
 musicGraphics.textAlign(LEFT, CENTER);
 musicGraphics.textFont(font1);
-musicGraphics.text('Music off', 0, 10);
-musicText.img = musicGraphics;
+musicGraphics.text(musicLabel[playing], 0, 10);
+musicText.image = musicGraphics;
 
 let songText = new Sprite(-370, -40, 180, 20);
 let songGraphics = createGraphics(180, 50);
@@ -145,17 +143,17 @@ songGraphics.strokeWeight(1);
 songGraphics.textAlign(LEFT, CENTER);
 songGraphics.textFont(font1);
 songGraphics.text(songs[playing], 0, 25);
-songText.img = songGraphics;
+songText.image = songGraphics;
 
 // volume
 
-let volumeBar = new Sprite(200, 630, 200, 200); //(200,280,140,13)
+let volumeBar = new Sprite(-400, 0, 360, 30); //(200,280,140,13)
 volumeBar.image = bar5;
-volumeBar.scale = .2;
+volumeBar.scale = .5;
 
-let volumeDot = new Sprite(200, 628, 1400, 70);
+let volumeDot = new Sprite(-400, 0, 50, 60);
 volumeDot.image = slideDot;
-volumeDot.scale = .2;
+volumeDot.scale = .5;
 
 let volumeText = new Sprite(200, 655, 10, 10);
 volumeText.text = 'Volume: ' + round(volume / 14);
@@ -182,7 +180,8 @@ infoGraphics.strokeWeight(2);
 infoGraphics.textAlign(CENTER, CENTER);
 infoGraphics.textFont(font2);
 infoGraphics.text("Info", 150, 100);
-infoText.img = infoGraphics;
+infoText.image = infoGraphics;
+
 
 let infoMenuText = new Sprite(0, 490, 10, 10);
 let infoMenuGraphics = createGraphics(300, 400);
@@ -193,7 +192,7 @@ infoMenuGraphics.strokeWeight(1);
 infoMenuGraphics.textAlign(CENTER, TOP);
 infoMenuGraphics.textFont(font1);
 infoMenuGraphics.text('Click the next to\n earn points. Once you earn\nenough coins,you can buy \npower ups in the shop.\nOnce you earn enough, you\ncan prestige and reset to\nearn a bonus and your nest\nwill evolve! CPC stands for\ncoins per click and CPS stands\nfor coins per second.\n\nGraphics by Cup Nooble\nMusic by Billie Eilish\nMade by Matilda Fletcher', 150, 20);
-infoMenuText.img = infoMenuGraphics;
+infoMenuText.image = infoMenuGraphics;
 
 // score menu
 let scoreMenu = new Sprite(-90, -540, 480, 260);
@@ -306,74 +305,77 @@ allSprites.debug = true;
 
 q5.update = function () {
  	background("#89D5D2");
-	// text('click to increase score!', 0, -50);
-	// text('Score: ' + score, 0, -30);
+	titleText.image = titleGraphics;
+	infoMenuText.image = infoMenuGraphics;
+	infoText.image = infoGraphics;
 
-	// if (mouse.presses() && pointer.overlapping(target)) {
-	// 	score += 1;
-	// }
-	if (page != 0) {
-    	textFont(font1);
-  	}
+	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
+
+
+	if (playing == 0) {
+		music.image = toggleOff1;
+	} else {
+		music.image = toggleOn1;
+	}
 	
 	if (page == 0) {
 		if 	(mouse.pressed() && pointer.overlapping(startButton)) {
-			startButton.img.offset.y = 10;
-			startButton.img = playButtonClicked;
-			setTimeout(() => {startButton.img = playButton; startButton.img.offset.y = 0;}, 100);
+			startButton.image.offset.y = 10;
+			startButton.image = playButtonClicked;
+			setTimeout(() => {startButton.image = playButton; startButton.image.offset.y = 0;}, 100);
 			page = 1;
 			showMain();
 		}
 		if (pointer.overlapping(startButton)) {
-			startButton.img = playButtonClicked;
-			startButton.img.offset.y = 10;
-			setTimeout(() => {startButton.img = playButton; startButton.img.offset.y = 0;}, 100);
+			startButton.image = playButtonClicked;
+			startButton.image.offset.y = 10;
+			setTimeout(() => {startButton.image = playButton; startButton.image.offset.y = 0;}, 100);
 		} else {
-			startButton.img = playButton;
-			startButton.img.offset.y = 0;
+			startButton.image = playButton;
+			startButton.image.offset.y = 0;
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(infoButton)) {
-			infoButton.img.offsety = -5;
-			infoButton.img = exButtonClicked;
-			setTimeout(() => { infoButton.img = exButton; page = 2; infoButton.img.offset.y = 0;}, 100);
+			infoButton.image.offsety = -5;
+			infoButton.image = exButtonClicked;
+			setTimeout(() => { infoButton.image = exButton; page = 2; infoButton.image.offset.y = 0;}, 100);
 		}
 		if (pointer.overlapping(infoButton)) {
-			infoButton.img = exButtonClicked;
-			infoButton.img.offset.y = -5;
+			infoButton.image = exButtonClicked;
+			infoButton.image.offset.y = -5;
 		} else {
-			infoButton.img = exButton;
-			infoButton.img.offset.y = 0;
+			infoButton.image = exButton;
+			infoButton.image.offset.y = 0;
 		}
   	} else if (page == 1) {
 		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
-			settingsButton.img.offset.y = -5;
-			settingsButton.img = settingsButtonClicked;
-			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
+			settingsButton.image.offset.y = -5;
+			settingsButton.image = settingsButtonClicked;
+			setTimeout(() => { settingsButton.image = settingsButtonL; settingsButton.image.offset.y = 0;}, 100);
 			page = 3;
 			showSettings();
 			hideMain();
 		}
 		if (pointer.overlapping(settingsButton)) {
-			settingsButton.img = settingsButtonClicked;
-			settingsButton.img.offset.y = -5;
+			settingsButton.image = settingsButtonClicked;
+			settingsButton.image.offset.y = -5;
 		} else {
-			settingsButton.img = settingsButtonL;
-			settingsButton.img.offset.y = 0;
+			settingsButton.image = settingsButtonL;
+			settingsButton.image.offset.y = 0;
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
-			shopButton.img.offset.y = -5;
-			shopButton.img = shopButtonClicked;
-			setTimeout(() => { shopButton.img = shopButtonL; shopButton.img.offset.y = 0;}, 100);
+			shopButton.image.offset.y = -5;
+			shopButton.image = shopButtonClicked;
+			setTimeout(() => { shopButton.image = shopButtonL; shopButton.image.offset.y = 0;}, 100);
 			page = 4;
 		}
 		if (pointer.overlapping(shopButton)) {
-			shopButton.img = shopButtonClicked;
-			shopButton.img.offset.y = -5;
+			shopButton.image = shopButtonClicked;
+			shopButton.image.offset.y = -5;
 		} else {
-			shopButton.img = shopButtonL;
-			shopButton.img.offset.y = 0;
+			shopButton.image = shopButtonL;
+			shopButton.image.offset.y = 0;
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
@@ -387,58 +389,62 @@ q5.update = function () {
 			page = 0;
 			hideInfo();
 		} else if (pointer.overlapping(infoButton)) {
-			infoButton.img = exButtonClicked;
+			infoButton.image = exButtonClicked;
 			infoButton.y = 165;
 		} else {
-			infoButton.img = exButton;
+			infoButton.image = exButton;
 			infoButton.y = 160;
 		}
 	} else if (page == 3) {
-		settingsButton.img = leftArrow1;
+		settingsButton.image = leftArrow1;
 		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
-			settingsButton.img.offsety = 10;
-			settingsButton.img = leftArrow2;
-			setTimeout(() => { settingsButton.img = leftArrow1; settingsButton.img.offset.y = 0;}, 100);
+			settingsButton.image.offsety = 10;
+			settingsButton.image = leftArrow2;
+			setTimeout(() => { settingsButton.image = leftArrow1; settingsButton.image.offset.y = 0;}, 100);
 			page = 1;
 			hideSettings();
 			showMain();
 		}
 		if (pointer.overlapping(settingsButton)) {
-			settingsButton.img = leftArrow2;
-			settingsButton.img.offset.y = 10;
+			settingsButton.image = leftArrow2;
+			settingsButton.image.offset.y = 10;
 		} else {
-			settingsButton.img = leftArrow1;
-			settingsButton.img.offset.y = 0;
+			settingsButton.image = leftArrow1;
+			settingsButton.image.offset.y = 0;
 		}
-
+		
+		if 	(mouse.pressed() && pointer.overlapping(music)) {
+			playing = 1-ceil(playing/10);
+			updateGraphics(musicText, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
+		}
   	} else if (page == 4) {
 		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
-			shopButton.img.offset.y = -5;
-			shopButton.img = shopButtonClicked;
-			setTimeout(() => { shopButton.img = shopButtonL; shopButton.img.offset.y = 0;}, 100);
+			shopButton.image.offset.y = -5;
+			shopButton.image = shopButtonClicked;
+			setTimeout(() => { shopButton.image = shopButtonL; shopButton.image.offset.y = 0;}, 100);
 			page = 1;
 		} else if (pointer.overlapping(shopButton)) {
-			shopButton.img = shopButtonClicked;
-			shopButton.img.offset.y = -5;
+			shopButton.image = shopButtonClicked;
+			shopButton.image.offset.y = -5;
 		} else {
-			shopButton.img = shopButtonL;
-			shopButton.img.offset.y = 0;
+			shopButton.image = shopButtonL;
+			shopButton.image.offset.y = 0;
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
-			settingsButton.img.offset.y = -5;
-			settingsButton.img = settingsButtonClicked;
-			setTimeout(() => { settingsButton.img = settingsButtonL; settingsButton.img.offset.y = 0;}, 100);
+			settingsButton.image.offset.y = -5;
+			settingsButton.image = settingsButtonClicked;
+			setTimeout(() => { settingsButton.image = settingsButtonL; settingsButton.image.offset.y = 0;}, 100);
 			page = 3;
 			showSettings();
 			hideMain();
 		}
 		if (pointer.overlapping(settingsButton)) {
-			settingsButton.img = settingsButtonClicked;
-			settingsButton.img.offset.y = -5;
+			settingsButton.image = settingsButtonClicked;
+			settingsButton.image.offset.y = -5;
 		} else {
-			settingsButton.img = settingsButtonL;
-			settingsButton.img.offset.y = 0;
+			settingsButton.image = settingsButtonL;
+			settingsButton.image.offset.y = 0;
 		}
 
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
@@ -447,7 +453,6 @@ q5.update = function () {
 			score += adder * multiplier;
 		}
 	}
-	
 };
 //page 0 - start
 //page 1 - main
@@ -481,54 +486,57 @@ function showInfo() {
 	infoText.moveTo(0, -115, 10);
   	infoMenuText.moveTo(0, 90, 10);
 }
-
-
 function hideSettings() {
 	settingsMenu.moveTo(-400, -20, 10);
 	music.moveTo(-495, -75, 10);
-	leftArrow.moveTo(-506, -40, 10)
-	rightArrow.moveTo(-486, -40, 10)
-	musicText.moveTo(-410, -75, 10)
-	songText.moveTo(-370, -40, 10)
-	// shopButton.moveTo(160, 160, 10);
-	// scoreMenu.moveTo(-90, -140, 10);
-	// target.moveTo(0, 50, 10);
-//   music.moveTo(115, 550, 10);
-//   leftArrow.moveTo(105, 590, 10);
-//   rightArrow.moveTo(135, 590, 10);
-//   musicText.moveTo(225, 550, 10);
-//   songText.moveTo(225, 590, 10);
-//   infoButton.moveTo(110, 685, 10);
-//   infoText.moveTo(225, 685, 10);
-//   infoMenu.moveTo(200, 600, 10);
-//   infoMenuText.moveTo(200, 600, 10);
-//   volumeBar.moveTo(200, 630, 10);
-//   volumeDot.moveTo(volume + 130, 628, 10);
-//   volumeText.moveTo(200, 655, 10);
+	leftArrow.moveTo(-506, -40, 10);
+	rightArrow.moveTo(-486, -40, 10);
+	musicText.moveTo(-410, -75, 10);
+	songText.moveTo(-370, -40, 10);
+	volumeBar.moveTo(-400, 0, 10);
+	volumeDot.moveTo(-400, 0, 10);
 }
 function showSettings() {
 	settingsMenu.moveTo(0, -20, 10);
 	music.moveTo(-95, -75, 10);
-	leftArrow.moveTo(-106, -40, 10)
-	rightArrow.moveTo(-86, -40, 10)
-	musicText.moveTo(-10, -75, 10)
-	songText.moveTo(30, -40, 10)
-	// shopButton.moveTo(560, 160, 10);
-	// scoreMenu.moveTo(-90, -540, 10);
-	// target.moveTo(0, 450, 10);
-//   music.moveTo(115, 150, 10);
-//   leftArrow.moveTo(105, 190, 10);
-//   rightArrow.moveTo(135, 190, 10);
-//   musicText.moveTo(225, 150, 10);
-//   songText.moveTo(225, 190, 10);
-//   infoButton.moveTo(110, 285, 10);
-//   infoText.moveTo(225, 285, 10);
-//   volumeBar.moveTo(200, 230, 10);
-//   volumeDot.moveTo(volume + 130, 228, 10);
-//   volumeText.moveTo(200, 255, 10);
+	leftArrow.moveTo(-106, -40, 10);
+	rightArrow.moveTo(-86, -40, 10);
+	musicText.moveTo(-10, -75, 10);
+	songText.moveTo(30, -40, 10);
+	volumeBar.moveTo(0, 0, 10);
+	volumeDot.moveTo(0, 0, 10);
 }
+// function updateGraphics(sprite, size) {
+//     let g = createGraphics(100, 20);
+
+//     g.textSize(size);
+//     g.fill('#90625d');
+//     g.stroke('#dcb98a');
+//     g.strokeWeight(1);
+//     g.textAlign(LEFT, CENTER);
+//     g.textFont(font1);
+
+//     g.text(playing ? 'Music on' : 'Music off', 0, 10);
+
+//     sprite.image = g;
+// }
 
 
+function updateGraphics(sprite, text, size, width, lenght, color, outline, alignx = CENTER, aligny = CENTER, font = font1, x = 0, y = 0, weight = 1) {
+    let g = createGraphics(width, lenght);
+
+    g.textSize(size);
+    g.fill(color);
+    g.stroke(outline);
+    g.strokeWeight(weight);
+    g.textAlign(alignx, aligny);
+    g.textFont(font);
+
+    g.text(text, x, y);
+
+    sprite.image = g;
+}
+// updateGraphics(music, musicLabel[playing], 20, 100, 20, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 10, 1);
 
 
 
