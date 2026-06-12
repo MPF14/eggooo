@@ -1,25 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <link id="favicon" rel="icon" type="image/png" href="assets/egg0.png">
-
-  <script type="module" src="https://q5js.org/q5.js"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "box2d3-wasm": "https://q5play.org/Box2D.deluxe.mjs"
-      }
-    }
-  </script>
-  <script type="module" src="https://q5play.org/q5play.js"></script>
-
-  <script type="module" src="script.js"></script>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" href="assets/egg1.png">
+	<title>q5play</title>
+	<style>
+		html,
+		body {
+			background-color: #6ed7d3;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			overscroll-behavior: none;
+		}
+	</style>
 </head>
 
-<body></body>
+<body>
+	<main></main>
+
+	<!-- ONLINE LINKS -->
+	<script type="module" src="https://q5js.org/q5.js"></script>
+	<script type="importmap">
+    { "imports": {
+      "box2d3-wasm": "https://q5play.org/Box2D.deluxe.mjs"
+    } }
+  </script>
+	<script type="module" src="https://q5play.org/q5play.js"></script>
+
+	<!-- OFFLINE LINKS -->
+	<!--
+  <script type="module" src="/node_modules/q5/q5.js"></script>
+  <script type="importmap">
+    { "imports": {
+      "box2d3-wasm": "/node_modules/box2d3-wasm/build/dist/es/deluxe/Box2D.deluxe.mjs"
+    } }
+  </script>
+  <script type="module" src="/node_modules/q5play/q5play.js"></script>
+  -->
+
+	<!-- YOUR SKETCH -->
+	<script type="module" src="script.js"></script>
+</body>
 
 </html>

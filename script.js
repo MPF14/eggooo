@@ -1,12 +1,13 @@
 let score = 0;
-let multiplier = 1;
-let passive = 0;
+let adder = {
+	multiplier: 1,
+	passive: 0};
 let page = 0;
 let prestige = 1;
 let IconState = 1;
 let scoreText = 'Score = ' + score;
-let multiplierText = 'Multiplier = ' + multiplier;
-let passiveText = 'Passive = ' + passive;
+let multiplierText = 'Multiplier = ' + adder.multiplier;
+let passiveText = 'Passive = ' + adder.passive;
 let playing = 0;
 let volume = 10;
 let rectSprite;
@@ -224,81 +225,207 @@ settingsButton.image = settingsButtonL;
 settingsButton.scale = 0.1;
 
 // shop menu
-let shopMenu = new Sprite(90, 0, 210, 430);
+let shopMenu = new Sprite(290, 0, 210, 430);
 shopMenu.image = shopMenuL;
-shopMenu.scale = .85;
+shopMenu.scale = .849;
+
+let shopText = new Sprite(290,-150,150,40);
+let shopGraphics = createGraphics(150,40);
+shopGraphics.textSize(40);
+shopGraphics.strokeWeight(0);
+shopGraphics.textAlign(CENTER, CENTER);
+shopGraphics.textFont(font1);
+shopGraphics.fill('#a97959');
+shopGraphics.text('shop', 78,23);
+shopGraphics.fill('#f5e3c1');
+shopGraphics.strokeWeight(3);
+shopGraphics.stroke('#b68962')
+shopGraphics.text('shop', 75,20);
+
+shopText.image = shopGraphics;
+
 
 // prestige button
-let prestigeButton = new Sprite(90, 150, 360, 100);
+let prestigeButton = new Sprite(290, 150, 360, 100);
 prestigeButton.image = prestigeButtonL;
 prestigeButton.scale = .4;
 
 // shop menu buttons
-let shopMenuButton1 = new Sprite(30, -110, 400, 450);
+let shopMenuButton1 = new Sprite(230, -105, 400, 400);
 shopMenuButton1.image = squareButton;
 shopMenuButton1.scale = .075;
 
-let shopMenuText1 = new Sprite(530, 50, 100, 35);
-shopMenuText1.text = 'COST: 50 \n1 CPC';
-shopMenuText1.textColor = '#90625d';
-shopMenuText1.color = '#dcb98a';
-shopMenuText1.stroke = '#dcb98a';
+let shopMenuText1 = new Sprite(310, -105, 100, 15);
+let shopMenuGraphic1 = createGraphics(100, 15);
+shopMenuGraphic1.textSize(14);
+shopMenuGraphic1.fill('#90625d');
+shopMenuGraphic1.stroke('#dcb98a');
+shopMenuGraphic1.strokeWeight(1);
+shopMenuGraphic1.textAlign(LEFT, CENTER);
+shopMenuGraphic1.textFont(font1);
+shopMenuGraphic1.text('1 CPC', 0, 7.5);
+shopMenuText1.image = shopMenuGraphic1;
 
+let shopMenuButtonText1 = new Sprite(230, -105, 30, 30);
+let shopMenuButtonGraphic1 = createGraphics(18, 16);
+shopMenuButtonGraphic1.textSize(16);
+shopMenuButtonGraphic1.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic1.stroke('#a97959');
+shopMenuButtonGraphic1.strokeWeight(2);
+shopMenuButtonGraphic1.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic1.textFont(font1);
+shopMenuButtonGraphic1.text('50', 9.5, 7.5);
+shopMenuButtonText1.image = shopMenuButtonGraphic1;
 
-let shopMenuButton2 = new Sprite(30, -70, 400, 450);
+let shopMenuButton2 = new Sprite(230, -65, 400, 400);
 shopMenuButton2.image = squareButton;
 shopMenuButton2.scale = .075;
 
-let shopMenuText2 = new Sprite(530, 100, 100, 35);
-shopMenuText2.text = 'COST: 1000 \n5 CPS';
-shopMenuText2.textColor = '#90625d';
-shopMenuText2.color = '#dcb98a';
-shopMenuText2.stroke = '#dcb98a';
+let shopMenuText2 = new Sprite(310, -65, 100, 15);
+let shopMenuGraphic2 = createGraphics(100, 15);
+shopMenuGraphic2.textSize(14);
+shopMenuGraphic2.fill('#90625d');
+shopMenuGraphic2.stroke('#dcb98a');
+shopMenuGraphic2.strokeWeight(1);
+shopMenuGraphic2.textAlign(LEFT, CENTER);
+shopMenuGraphic2.textFont(font1);
+shopMenuGraphic2.text('5 CPS', 0, 7.5);
+shopMenuText2.image = shopMenuGraphic2;
+
+let shopMenuButtonText2 = new Sprite(230, -65, 30, 30);
+let shopMenuButtonGraphic2 = createGraphics(18, 16);
+shopMenuButtonGraphic2.textSize(8);
+shopMenuButtonGraphic2.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic2.stroke('#a97959');
+shopMenuButtonGraphic2.strokeWeight(2);
+shopMenuButtonGraphic2.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic2.textFont(font1);
+shopMenuButtonGraphic2.text('1000', 9.5, 7.5);
+shopMenuButtonText2.image = shopMenuButtonGraphic2;
 
 
-let shopMenuButton3 = new Sprite(30, -30, 400, 450);
+let shopMenuButton3 = new Sprite(230, -25, 400, 400);
 shopMenuButton3.image = squareButton;
 shopMenuButton3.scale = .075;
 
-let shopMenuText3 = new Sprite(530, 150, 100, 35);
-shopMenuText3.text = 'COST: 25000 \n300 CPC';
-shopMenuText3.textColor = '#90625d';
-shopMenuText3.color = '#dcb98a';
-shopMenuText3.stroke = '#dcb98a';
 
-let shopMenuButton4 = new Sprite(30, 10, 400, 450);
+let shopMenuText3 = new Sprite(310, -25, 100, 15);
+let shopMenuGraphic3 = createGraphics(100, 15);
+shopMenuGraphic3.textSize(14);
+shopMenuGraphic3.fill('#90625d');
+shopMenuGraphic3.stroke('#dcb98a');
+shopMenuGraphic3.strokeWeight(1);
+shopMenuGraphic3.textAlign(LEFT, CENTER);
+shopMenuGraphic3.textFont(font1);
+shopMenuGraphic3.text('300 CPC', 0, 7.5);
+shopMenuText3.image = shopMenuGraphic3;
+
+
+let shopMenuButtonText3 = new Sprite(230, -25, 30, 30);
+let shopMenuButtonGraphic3 = createGraphics(18, 16);
+shopMenuButtonGraphic3.textSize(6);
+shopMenuButtonGraphic3.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic3.stroke('#a97959');
+shopMenuButtonGraphic3.strokeWeight(2);
+shopMenuButtonGraphic3.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic3.textFont(font1);
+shopMenuButtonGraphic3.text('25000', 9.5, 7.5);
+shopMenuButtonText3.image = shopMenuButtonGraphic3;
+
+let shopMenuButton4 = new Sprite(230, 15, 400, 400);
 shopMenuButton4.image = squareButton;
 shopMenuButton4.scale = .075;
 
-let shopMenuText4 = new Sprite(530, 200, 100, 35);
-shopMenuText4.text = 'COST: 5a \n30,000 CPS';
-shopMenuText4.textColor = '#90625d';
-shopMenuText4.color = '#dcb98a';
-shopMenuText4.stroke = '#dcb98a';
 
-let shopMenuButton5 = new Sprite(30, 50, 400, 450);
+let shopMenuText4 = new Sprite(310, 15, 100, 15);
+let shopMenuGraphic4 = createGraphics(100, 15);
+shopMenuGraphic4.textSize(14);
+shopMenuGraphic4.fill('#90625d');
+shopMenuGraphic4.stroke('#dcb98a');
+shopMenuGraphic4.strokeWeight(1);
+shopMenuGraphic4.textAlign(LEFT, CENTER);
+shopMenuGraphic4.textFont(font1);
+shopMenuGraphic4.text('30,000 CPS', 0, 7.5);
+shopMenuText4.image = shopMenuGraphic4;
+
+
+let shopMenuButtonText4 = new Sprite(230, 15, 30, 30);
+let shopMenuButtonGraphic4 = createGraphics(18, 16);
+shopMenuButtonGraphic4.textSize(16);
+shopMenuButtonGraphic4.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic4.stroke('#a97959');
+shopMenuButtonGraphic4.strokeWeight(2);
+shopMenuButtonGraphic4.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic4.textFont(font1);
+shopMenuButtonGraphic4.text('5a', 9.5, 7.5);
+shopMenuButtonText4.image = shopMenuButtonGraphic4;
+
+let shopMenuButton5 = new Sprite(230, 55, 400, 400);
 shopMenuButton5.image = squareButton;
 shopMenuButton5.scale = .075;
 
-let shopMenuText5 = new Sprite(530, 250, 100, 35);
-shopMenuText5.text = 'COST: 250a \n3a CPC';
-shopMenuText5.textColor = '#90625d';
-shopMenuText5.color = '#dcb98a';
-shopMenuText5.stroke = '#dcb98a';
 
-let shopMenuButton6 = new Sprite(30, 95, 400, 450);
+let shopMenuText5 = new Sprite(310, 55, 100, 15);
+let shopMenuGraphic5 = createGraphics(100, 15);
+shopMenuGraphic5.textSize(14);
+shopMenuGraphic5.fill('#90625d');
+shopMenuGraphic5.stroke('#dcb98a');
+shopMenuGraphic5.strokeWeight(1);
+shopMenuGraphic5.textAlign(LEFT, CENTER);
+shopMenuGraphic5.textFont(font1);
+shopMenuGraphic5.text('3a CPC', 0, 7.5);
+shopMenuText5.image = shopMenuGraphic5;
+
+
+let shopMenuButtonText5 = new Sprite(230, 55, 30, 30);
+let shopMenuButtonGraphic5 = createGraphics(18, 16);
+shopMenuButtonGraphic5.textSize(8);
+shopMenuButtonGraphic5.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic5.stroke('#a97959');
+shopMenuButtonGraphic5.strokeWeight(2);
+shopMenuButtonGraphic5.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic5.textFont(font1);
+shopMenuButtonGraphic5.text('250a', 9.5, 7.5);
+shopMenuButtonText5.image = shopMenuButtonGraphic5;
+
+let shopMenuButton6 = new Sprite(230, 95, 400, 400);
 shopMenuButton6.image = squareButton;
-shopMenuButton6.scale = .075;
+shopMenuButton6.scale = .076;
 
-let shopMenuText6 = new Sprite(530, 300, 100, 35);
-shopMenuText6.text = 'COST: 100b \n500a CPS';
-shopMenuText6.textColor = '#90625d';
-shopMenuText6.color = '#dcb98a';
-shopMenuText6.stroke = '#dcb98a';
 
+let shopMenuText6 = new Sprite(310, 95, 100, 15);
+let shopMenuGraphic6 = createGraphics(100, 15);
+shopMenuGraphic6.textSize(14);
+shopMenuGraphic6.fill('#90625d');
+shopMenuGraphic6.stroke('#dcb98a');
+shopMenuGraphic6.strokeWeight(1);
+shopMenuGraphic6.textAlign(LEFT, CENTER);
+shopMenuGraphic6.textFont(font1);
+shopMenuGraphic6.text('500a CPS', 0, 7.5);
+shopMenuText6.image = shopMenuGraphic6;
+
+
+let shopMenuButtonText6 = new Sprite(230, 95, 30, 30);
+let shopMenuButtonGraphic6 = createGraphics(18, 16);
+shopMenuButtonGraphic6.textSize(8);
+shopMenuButtonGraphic6.fill('#e7cfa5'); //#b68962
+shopMenuButtonGraphic6.stroke('#a97959');
+shopMenuButtonGraphic6.strokeWeight(2);
+shopMenuButtonGraphic6.textAlign(CENTER, CENTER);
+shopMenuButtonGraphic6.textFont(font1);
+shopMenuButtonGraphic6.text('100b', 9.5, 7.5);
+shopMenuButtonText6.image = shopMenuButtonGraphic6;
+
+let shopStuff = [
+[shopMenuButton1, shopMenuText1, shopMenuButtonText1, 'multiplier', 1, 50],
+[shopMenuButton2, shopMenuText2, shopMenuButtonText2, 'passive', 5, 1000],
+[shopMenuButton3, shopMenuText3, shopMenuButtonText3, 'multiplier', 300, 25000],
+[shopMenuButton4, shopMenuText4, shopMenuButtonText4, 'passive', 30000, 5000000],
+[shopMenuButton5, shopMenuText5, shopMenuButtonText5, 'multiplier', 3000000, 250000000],
+[shopMenuButton6, shopMenuText6, shopMenuButtonText6, 'passive', 500000000, 100000000000]];
 
 allSprites.passes(allSprites);
-allSprites.debug = true;
+//allSprites.debug = true;
 
 q5.update = function () {
  	background("#89D5D2");
@@ -309,34 +436,29 @@ q5.update = function () {
 	toolIcon.image.offset.y = -30;
 	toolIcon.image.offset.x = 55;
 	coinIcon.image.offset.x = 15;
-	// setTimeout(() => {lastSong = playing;},1000);
-	// if (lastSong != playing) {
-	// 	updateGraphics(songText, songs[playing], 20, 180, 50, '#90625d', '#dcb98a', LEFT, CENTER, font1, 0, 25, 1);
-	// 	console.log("updating");
-	// }
+
 	coinIcon.image =
-    floor(millis() / 650) % 2
+    floor(millis() / 700) % 2
         ? coinIcon2
         : coinIcon1;
 	toolIcon.image =
-    floor(millis() / 650) % 2
+    floor(millis() / 700) % 2
         ? toolIcon2
         : toolIcon1;
 	waterIcon.image =
-    floor(millis() / 650) % 2
+    floor(millis() / 700) % 2
         ? waterIcon2
         : waterIcon1;
+	target.scale.y =
+    floor(millis() / 450) % 2
+        ? .31
+        : .29;
 	if (playing == 0) {
 		music.image = toggleOff1;
 	} else {
 		music.image = toggleOn1;
 	}
-	// for (const song of audios) {
-    // 	if (playing == song && audios[song].isPlaying() == false) {
-	// 		audios[song].play();
-	// 		if (song != 10) {song +=1;} else {song = 1}
-	// 	}
-	// }
+
 	if (page == 0) {
 		if 	(mouse.pressed() && pointer.overlapping(startButton)) {
 			startButton.image.offset.y = 10;
@@ -389,6 +511,7 @@ q5.update = function () {
 			shopButton.image = shopButtonClicked;
 			setTimeout(() => { shopButton.image = shopButtonL; shopButton.image.offset.y = 0;}, 100);
 			page = 4;
+			showShop();
 		}
 		if (pointer.overlapping(shopButton)) {
 			shopButton.image = shopButtonClicked;
@@ -401,7 +524,7 @@ q5.update = function () {
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
-			score += multiplier;
+			score += adder.multiplier;
 			scoreboard();
 			}
   	} else if (page == 2) {
@@ -503,12 +626,101 @@ q5.update = function () {
 			infoButton.image = exButton;
 			infoButton.image.offset.y = 0;
 		}
+	} else if (page == 3.6){
+		settingsButton.image = leftArrow1;
+		if 	(mouse.pressed() && pointer.overlapping(settingsButton)) {
+			settingsButton.image.offset.y = 10;
+			settingsButton.image = leftArrow2;
+			setTimeout(() => { settingsButton.image = leftArrow1; settingsButton.image.offset.y = 0;}, 100);
+			page = 4;
+			hideSettings();
+			showMain();
+			setTimeout(() => {showShop();}, 800);
+		}
+		if (pointer.overlapping(settingsButton)) {
+			settingsButton.image = leftArrow2;
+			settingsButton.image.offset.y = 10;
+		} else {
+			settingsButton.image = leftArrow1;
+			settingsButton.image.offset.y = 0;
+		}
+		
+		if 	(mouse.pressed() && pointer.overlapping(music)) {
+			if (playing != 0) {
+				stopAllAudio();
+			} else {
+				startAudio();
+			}
+		}
+
+		if 	(mouse.pressing() && (pointer.overlapping(volumeBar) || pointer.overlapping(volumeDot))) {
+			volume = mouse.x+101.25;
+			volumeBar.image = bars[floor(volume/22.5)];
+			if (abs(mouse.x)<90) {volumeDot.x = mouse.x;}
+			console.log(volume,audios[playing].volume);
+		}
+
+		if 	(mouse.pressed() && pointer.overlapping(leftArrow)) {
+			leftArrow.image.offset.y = 5;
+			leftArrow.image = leftArrow2;
+			setTimeout(() => {leftArrow.image = leftArrow1; leftArrow.image.offset.y = 0;}, 100);
+			if (playing!=1) {playing -= 1;} else {playing = 10;}
+			startAudio();
+		}
+		if (pointer.overlapping(leftArrow)) {
+			leftArrow.image.offset.y = 5;
+			leftArrow.image = leftArrow2;
+		} else {
+			leftArrow.image.offset.y = 0;
+			leftArrow.image = leftArrow1;
+		}
+		if 	(mouse.pressed() && pointer.overlapping(rightArrow)) {
+			rightArrow.image.offset.y = 5;
+			rightArrow.image = rightArrow2;
+			setTimeout(() => {rightArrow.image = rightArrow1; rightArrow.image.offset.y = 0;}, 100);
+			if (playing!=10) {playing += 1;} else {playing = 1}
+			startAudio();
+		}
+
+		if (pointer.overlapping(rightArrow)) {
+			rightArrow.image.offset.y = 5;
+			rightArrow.image = rightArrow2;
+		} else {
+			rightArrow.image.offset.y = 0;
+			rightArrow.image = rightArrow1;
+		}
+
+		if 	(mouse.pressed() && pointer.overlapping(infoButton)) {
+			infoButton.image.offset.y = -5;
+			infoButton.image = exButtonClicked;
+			page = 3.7;
+			showInfo(20);
+		}
+		if (pointer.overlapping(infoButton)) {
+			infoButton.image = exButtonClicked;
+			infoButton.image.offset.y = -5;
+		} else {
+			infoButton.image = exButton;
+			infoButton.image.offset.y = 0;
+		}
+	} else if (page == 3.7){
+		if 	(mouse.pressed()) {
+			page = 3.6;
+			hideInfo();
+		} else if (pointer.overlapping(infoButton)) {
+			infoButton.image = exButtonClicked;
+			infoButton.image.offset.y = -5;
+		} else {
+			infoButton.image = exButton;
+			infoButton.image.offset.y = 0;
+		}
   	} else if (page == 4) {
 		if 	(mouse.pressed() && pointer.overlapping(shopButton)) {
 			shopButton.image.offset.y = -5;
 			shopButton.image = shopButtonClicked;
 			setTimeout(() => { shopButton.image = shopButtonL; shopButton.image.offset.y = 0;}, 100);
 			page = 1;
+			hideShop();
 		} else if (pointer.overlapping(shopButton)) {
 			shopButton.image = shopButtonClicked;
 			shopButton.image.offset.y = -5;
@@ -521,9 +733,10 @@ q5.update = function () {
 			settingsButton.image.offset.y = -5;
 			settingsButton.image = settingsButtonClicked;
 			setTimeout(() => { settingsButton.image = settingsButtonL; settingsButton.image.offset.y = 0;}, 100);
-			page = 3;
-			showSettings();
+			page = 3.6;
+			hideShop();
 			hideMain();
+			showSettings();
 		}
 		if (pointer.overlapping(settingsButton)) {
 			settingsButton.image = settingsButtonClicked;
@@ -536,9 +749,43 @@ q5.update = function () {
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
 			target.scale = .27;
 			setTimeout(() => { target.scale = .3;}, 25);
-			score += multiplier;
+			score += adder.multiplier;
 			scoreboard();
+		}
+		// if (pointer.overlapping(shopStuff[0])) {
+		// 		//shopStuff[i].image.offset.y = -5;
+		// 		shopStuff[0].image = squareButtonClicked;
+		// 		//if (mouse.pressed()){
+		// 		// setTimeout(() => { shopStuff[i].image = squareButton; shopStuff[i].image.offset.y = 0;}, 100);
+		// 		//}
+		// }
+
+		if (pointer.overlapping(shopMenuButtonText1)) {
+				shopMenuButton1.image.offset.y = -5;
+				shopMenuButton1.image = squareButtonClicked;
+				//if (mouse.pressed()){
+				// setTimeout(() => { shopStuff[i].image = squareButton; shopStuff[i].image.offset.y = 0;}, 100);
+				//}
+		}
+
+		for (let i = 0; i < shopStuff.length; i++){
+			if (pointer.overlapping(shopStuff[i][2])) {
+				shopStuff[i][0].image.offset.y = -5;
+				shopStuff[i][0].image = squareButtonClicked;
+				if (mouse.pressed()){
+				setTimeout(() => { shopStuff[i][0].image = squareButton; shopStuff[i][0].image.offset.y = 0;}, 100);
+					if (score>=shopStuff[i][5]) {
+						score -=shopStuff[i][5];
+						adder[shopStuff[i][3]] += shopStuff[i][4];
+						scoreboard();
+					}
+				}
+			} else {
+			shopStuff[i][0].image = squareButton;
+			shopStuff[i][0].image.offset.y = 0;
+			//console.log(stuff);}
 			}
+		}
 	}
 };
 //page 0 - start
@@ -625,8 +872,8 @@ function updateMusicLabels(){
 
 function scoreboard(){
 	scoreText = 'Score = ' + score;
-	multiplierText = 'Multiplier = ' + multiplier;
-	passiveText = 'Passive = ' + passive;
+	multiplierText = 'Multiplier = ' + adder.multiplier;
+	passiveText = 'Passive = ' + adder.passive;
 	let g = createGraphics(192,104);
 	g.textSize(15);
 	g.fill('#90625d');
@@ -658,4 +905,68 @@ function startAudio(){
 }
 function setFavicon(path) {
     document.getElementById('favicon').href = path;
+}
+
+function showShop() {
+	prestigeButton.moveTo(90, 150, 10);
+	shopMenuButton1.moveTo(30, -105, 10);
+	shopMenuText1.moveTo(110, -105, 10);
+	shopMenuButtonText1.moveTo(30, -105, 10);
+	shopMenuButton2.moveTo(30, -65, 10);
+	shopMenuText2.moveTo(110, -65, 10);
+	shopMenuButtonText2.moveTo(30, -65, 10);
+	shopMenuButton3.moveTo(30, -25, 10);
+	shopMenuText3.moveTo(110, -25, 10);
+	shopMenuButtonText3.moveTo(30, -25, 10);
+	shopMenuButton4.moveTo(30, 15, 10);
+	shopMenuText4.moveTo(110, 15, 10);
+	shopMenuButtonText4.moveTo(30, 15, 10);
+	shopMenuButton5.moveTo(30, 55, 10);
+	shopMenuText5.moveTo(110, 55, 10);
+	shopMenuButtonText5.moveTo(30, 55, 10);
+	shopMenuButton6.moveTo(30, 95, 10);
+	shopMenuText6.moveTo(110, 95, 10);
+	shopMenuButtonText6.moveTo(30, 95, 10);
+	shopMenu.moveTo(90, 0, 10);
+	shopText.moveTo(90,-150, 10);
+	shopButton.moveTo(-40, 160, 10);
+	scoreMenu.moveTo(-100, -140, .5);
+	coinIcon.moveTo(-180, -177, .5);
+	toolIcon.moveTo(-180, -140, .5);
+	waterIcon.moveTo(-180, -107, .5);
+	scoreboardText.moveTo(-100, -140, .5);
+	target.moveTo(-100,50,5);
+	titleText.moveTo(-170,-75,17.315);
+}
+
+function hideShop() {
+	prestigeButton.moveTo(290, 150, 10);
+	shopMenuButton1.moveTo(230, -105, 10);
+	shopMenuText1.moveTo(310, -105, 10);
+	shopMenuButtonText1.moveTo(230, -105, 10);
+	shopMenuButton2.moveTo(230, -65, 10);
+	shopMenuText2.moveTo(310, -65, 10);
+	shopMenuButtonText2.moveTo(230, -65, 10);
+	shopMenuButton3.moveTo(230, -25, 10);
+	shopMenuText3.moveTo(310, -25, 10);
+	shopMenuButtonText3.moveTo(230, -25, 10);
+	shopMenuButton4.moveTo(230, 15, 10);
+	shopMenuText4.moveTo(310, 15, 10);
+	shopMenuButtonText4.moveTo(230, 15, 10);
+	shopMenuButton5.moveTo(230, 55, 10);
+	shopMenuText5.moveTo(310, 55, 10);
+	shopMenuButtonText5.moveTo(230, 55, 10);
+	shopMenuButton6.moveTo(230, 95, 10);
+	shopMenuText6.moveTo(310, 95, 10);
+	shopMenuButtonText6.moveTo(230, 95, 10);
+	shopMenu.moveTo(290, 0, 10);
+	shopText.moveTo(290,-150, 10);
+	shopButton.moveTo(160, 160, 10);
+	scoreMenu.moveTo(-90, -140, .5);
+	coinIcon.moveTo(-170, -177, .5);
+	toolIcon.moveTo(-170, -140, .5);
+	waterIcon.moveTo(-170, -107, .5);
+	scoreboardText.moveTo(-90, -140, .5);
+	target.moveTo(0,50,5);
+	titleText.moveTo(160,-180,17.315);
 }
