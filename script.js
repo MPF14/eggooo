@@ -1,6 +1,6 @@
 let score = 0;
 let adder = {
-	multiplier: 1,
+	multiplier: 30,
 	passive: 0};
 let page = 0;
 let prestige = 1;
@@ -437,6 +437,10 @@ q5.update = function () {
 	toolIcon.image.offset.x = 55;
 	coinIcon.image.offset.x = 15;
 
+	
+	//if (millis() % 10 === 0) {score += adder.passive/10; scoreboard();}
+	score += adder.passive * deltaTime / 1000;
+	scoreboard();
 	coinIcon.image =
     floor(millis() / 700) % 2
         ? coinIcon2
@@ -783,7 +787,6 @@ q5.update = function () {
 			} else {
 			shopStuff[i][0].image = squareButton;
 			shopStuff[i][0].image.offset.y = 0;
-			//console.log(stuff);}
 			}
 		}
 	}
@@ -871,7 +874,7 @@ function updateMusicLabels(){
 	}
 
 function scoreboard(){
-	scoreText = 'Score = ' + score;
+	scoreText = 'Score = ' + floor(score);
 	multiplierText = 'Multiplier = ' + adder.multiplier;
 	passiveText = 'Passive = ' + adder.passive;
 	let g = createGraphics(192,104);
@@ -893,7 +896,6 @@ function stopAllAudio() {
 	updateMusicLabels();
 }
 function startAudio(){
-	console.log(playing);
 	for (let song of audios) {
         song.stop();}
 	if (playing != 0) {
