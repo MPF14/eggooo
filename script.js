@@ -1,4 +1,4 @@
-let score = 0;
+let score = 49;
 let adder = {
 	multiplier: 30,
 	passive: 0};
@@ -14,6 +14,7 @@ let rectSprite;
 let musicLabel = ['Music off', 'Music on', 'Music on', 'Music on', 'Music onn', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on', 'Music on'];
 let songs = ['off','skinny', 'lunch', 'chihiro', 'birds of a feather', 'wildflower', 'the greatest', "l'amor de ma vie", 'the diner', 'bittersuite', 'blue'];
 let lastSong = playing;
+
 
 await Canvas(400, 400)
 background("#89D5D2");
@@ -417,13 +418,15 @@ shopMenuButtonGraphic6.text('100b', 9.5, 7.5);
 shopMenuButtonText6.image = shopMenuButtonGraphic6;
 
 let shopStuff = [
-[shopMenuButton1, shopMenuText1, shopMenuButtonText1, 'multiplier', 1, 50],
-[shopMenuButton2, shopMenuText2, shopMenuButtonText2, 'passive', 5, 1000],
-[shopMenuButton3, shopMenuText3, shopMenuButtonText3, 'multiplier', 300, 25000],
-[shopMenuButton4, shopMenuText4, shopMenuButtonText4, 'passive', 30000, 5000000],
-[shopMenuButton5, shopMenuText5, shopMenuButtonText5, 'multiplier', 3000000, 250000000],
-[shopMenuButton6, shopMenuText6, shopMenuButtonText6, 'passive', 500000000, 100000000000]];
+[shopMenuButton1, shopMenuText1, shopMenuButtonText1, 'multiplier', 1, 50, 16],
+[shopMenuButton2, shopMenuText2, shopMenuButtonText2, 'passive', 5, 1000, 8],
+[shopMenuButton3, shopMenuText3, shopMenuButtonText3, 'multiplier', 300, 25000, 6],
+[shopMenuButton4, shopMenuText4, shopMenuButtonText4, 'passive', 30000, 5000000, 16],
+[shopMenuButton5, shopMenuText5, shopMenuButtonText5, 'multiplier', 3000000, 250000000, 8],
+[shopMenuButton6, shopMenuText6, shopMenuButtonText6, 'passive', 500000000, 100000000000, 8]];
 
+let prestigeAvailable = [[prestigeButtonL, prestigeButtonClicked], [prestigeButton2, prestigeButtonClicked2]];
+let prestigeCost = 0;
 allSprites.passes(allSprites);
 //allSprites.debug = true;
 
@@ -752,32 +755,34 @@ q5.update = function () {
 
 		if 	(mouse.pressed() && pointer.overlapping(target)) {
 			target.scale = .27;
-			setTimeout(() => { target.scale = .3;}, 25);
+			setTimeout(() => { target.scale = .3;}, 50);
 			score += adder.multiplier;
 			scoreboard();
 		}
-		// if (pointer.overlapping(shopStuff[0])) {
-		// 		//shopStuff[i].image.offset.y = -5;
-		// 		shopStuff[0].image = squareButtonClicked;
-		// 		//if (mouse.pressed()){
-		// 		// setTimeout(() => { shopStuff[i].image = squareButton; shopStuff[i].image.offset.y = 0;}, 100);
-		// 		//}
-		// }
-
-		if (pointer.overlapping(shopMenuButtonText1)) {
-				shopMenuButton1.image.offset.y = -5;
-				shopMenuButton1.image = squareButtonClicked;
-				//if (mouse.pressed()){
-				// setTimeout(() => { shopStuff[i].image = squareButton; shopStuff[i].image.offset.y = 0;}, 100);
-				//}
-		}
 
 		for (let i = 0; i < shopStuff.length; i++){
+			let shopMenuButtonGraphic = createGraphics(18, 16);
+				shopMenuButtonGraphic.textSize(shopStuff[i][6]);
+				shopMenuButtonGraphic.stroke('#a97959'); //#b68962
+				shopMenuButtonGraphic.strokeWeight(2);
+				shopMenuButtonGraphic.textAlign(CENTER, CENTER);
+				shopMenuButtonGraphic.textFont(font1);
+				
+
+			if (score>=shopStuff[i][5]){
+					shopMenuButtonGraphic.fill('#f2e7bf');
+					shopMenuButtonGraphic.text(numberText(shopStuff[i][5]), 9.5, 7.5);
+					shopStuff[i][2].image = shopMenuButtonGraphic;
+					
+			} else {shopMenuButtonGraphic.fill('#ddb987');
+					shopMenuButtonGraphic.text(numberText(shopStuff[i][5]), 9.5, 7.5);
+					shopStuff[i][2].image = shopMenuButtonGraphic;
+			}
 			if (pointer.overlapping(shopStuff[i][2])) {
 				shopStuff[i][0].image.offset.y = -5;
 				shopStuff[i][0].image = squareButtonClicked;
-				if (mouse.pressed()){
-				setTimeout(() => { shopStuff[i][0].image = squareButton; shopStuff[i][0].image.offset.y = 0;}, 100);
+				if (score>=shopStuff[i][5] && mouse.pressed()){
+					setTimeout(() => { shopStuff[i][0].image = squareButton; shopStuff[i][0].image.offset.y = 0;}, 100);
 					if (score>=shopStuff[i][5]) {
 						score -=shopStuff[i][5];
 						adder[shopStuff[i][3]] += shopStuff[i][4];
@@ -789,6 +794,17 @@ q5.update = function () {
 			shopStuff[i][0].image.offset.y = 0;
 			}
 		}
+
+		if (score>=10000000000000) {
+			prestigeCost = 1;
+		} else { prestigeCost = 0;}
+
+		if (pointer.overlapping(prestigeButton)){
+			console.log('over');
+			prestigeButton.image.offset.y = 5;
+			prestigeButton.image = prestigeAvailable[prestigeCost][1];
+		} else {prestigeButton.image.offset.y = 0; prestigeButton.image = prestigeAvailable[prestigeCost][0];}
+
 	}
 };
 //page 0 - start
@@ -971,4 +987,21 @@ function hideShop() {
 	scoreboardText.moveTo(-90, -140, .5);
 	target.moveTo(0,50,5);
 	titleText.moveTo(160,-180,17.315);
+}
+
+function numberText(number){
+	let j = ['e', 'f', 'g', 'h']
+	let k = 3;
+	for (let i = 1000000000000000; i > 1000; i = i / 1000) {
+		if (number>=i){
+			return (floor(number/i)+j[k]);
+		} else {--k;}
+
+
+	//   1,000
+	// a 1,000,000
+	// b 1,000,000,000
+	// c 1,000,000,000,000
+	// d 1,000,000,000,000,000
+	} return number;
 }
